@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<saml2p:Response Destination="http://1.lvh.me/users/auth/mpassid/callback" ID="_9f48f12fa0d4a9cb6252b9a3a37c97c4" InResponseTo="_da172078-ed71-4c12-be6c-7b90ce92d3da" IssueInstant="2019-08-14T22:34:10.335Z" Version="2.0" xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol">
+    <saml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">https://mpass-proxy-test.csc.fi/idp/shibboleth</saml2:Issuer>
+    <saml2p:Status>
+        <saml2p:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success" />
+    </saml2p:Status>
+    <saml2:Assertion ID="_4da4f452fe9f8819af9acde857a11003" IssueInstant="2019-08-14T22:34:10.335Z" Version="2.0" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
+        <saml2:Issuer>https://mpass-proxy-test.csc.fi/idp/shibboleth</saml2:Issuer>
+        <saml2:Subject>
+            <saml2:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:transient" NameQualifier="https://mpass-proxy-test.csc.fi/idp/shibboleth" SPNameQualifier="http://1.lvh.me/users/auth/mpassid/metadata" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">AAdzZWNyZXQxbymZQZa2Hia03hGvBlUQppcuaBjphnWXY826bqyWVBjJfiHN4d9F+x3niGfJyuYd24w/4y1alxLosfWKsGeO2n3Jm/BPHU7eYcNHtXzPDNPdjmWzoXC9uUHlLkxvHgci7e1wtInmFnRSv4T0vCAc1WEThiseTjsX</saml2:NameID>
+            <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
+                <saml2:SubjectConfirmationData Address="84.250.239.64" InResponseTo="_da172078-ed71-4c12-be6c-7b90ce92d3da" NotOnOrAfter="2019-08-14T22:39:10.343Z" Recipient="http://1.lvh.me/users/auth/mpassid/callback" />
+            </saml2:SubjectConfirmation>
+        </saml2:Subject>
+        <saml2:Conditions NotBefore="2019-08-14T22:34:10.335Z" NotOnOrAfter="2019-08-14T22:39:10.335Z">
+            <saml2:AudienceRestriction>
+                <saml2:Audience>http://1.lvh.me/users/auth/mpassid/metadata</saml2:Audience>
+            </saml2:AudienceRestriction>
+        </saml2:Conditions>
+        <saml2:AuthnStatement AuthnInstant="2019-08-14T22:34:08.975Z" SessionIndex="_db96cc3c6cc7205fa7bcdc08c4e218ff">
+            <saml2:SubjectLocality Address="84.250.239.64" />
+            <saml2:AuthnContext>
+                <saml2:AuthnContextClassRef>urn:mpass.id:authnsource:ShibLdap</saml2:AuthnContextClassRef>
+            </saml2:AuthnContext>
+        </saml2:AuthnStatement>
+        <saml2:AttributeStatement></saml2:AttributeStatement>
+    </saml2:Assertion>
+</saml2p:Response>

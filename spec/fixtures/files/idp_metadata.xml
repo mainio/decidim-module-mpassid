@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xml="http://www.w3.org/XML/1998/namespace" entityID="https://mpass-proxy-test.csc.fi/idp/shibboleth">
+
+    <IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+
+        <KeyDescriptor use="signing">
+            <ds:KeyInfo>
+                <ds:X509Data>
+                    <ds:X509Certificate>
+MIIDRzCCAi+gAwIBAgIUEa1rZub7zJkDkHibduG/qW9jg00wDQYJKoZIhvcNAQEL
+BQAwIjEgMB4GA1UEAwwXbXBhc3MtcHJveHktdGVzdC5jc2MuZmkwHhcNMTUwOTEw
+MDczODAyWhcNMzUwOTEwMDczODAyWjAiMSAwHgYDVQQDDBdtcGFzcy1wcm94eS10
+ZXN0LmNzYy5maTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJ+HX7We
+a6NuO2/WlrT9pkEu4aJww6+VjCXS8DPflHSx2i203sa9jYJEc5FwsgpTBm7ph6bw
+bye6HBjm4NOS4rlYQPbqsz0c+czS2a+lf0Nwqajp0okEEwJP58LJB1T3B3ODHQyM
+bpV3p8TE5pLNHGwWTzEDMPWdo1xrx/ESECqlcAQYz8CozkHuPds5rPEuSvsM1MGo
+n4WCCr+Rwb0JkSGvqN2u5PVkxXECrFZ5uRgCBWlP7zNzRSEZVil8oGa3GMEJASUZ
+7Mi+zgcmGgXWMoHMntidgruPTenEpuDAlYWwF5hlBdq6mZsbZRe7+KFX95Lhtgeq
+UgrNkTewYv8eGXkCAwEAAaN1MHMwHQYDVR0OBBYEFCkRzhGNwRh2oh6JhMlvv0Fu
+89cCMFIGA1UdEQRLMEmCF21wYXNzLXByb3h5LXRlc3QuY3NjLmZphi5odHRwczov
+L21wYXNzLXByb3h5LXRlc3QuY3NjLmZpL2lkcC9zaGliYm9sZXRoMA0GCSqGSIb3
+DQEBCwUAA4IBAQAiJ8O6nxnFqqEb4nhYHh8rfjI+8SDxZQX3ZIkijCT/szr+Cbuk
+fmL6i32gsbt3mIIr/Szwq8kdAdRFpO3PWfLNnFvaLG7K6PBHdGHTQGmvBbK790Mn
+SEVeEfQ/hg3W1Wjepq7X+qdDjweuxA3zHYpTqcAPtjCMNkbxERPBhtNgKIylMdAA
+2mRSmYNhiPozszxwHW7HyxuH6o8USM509NQryfAy9MH2oNZZ/IvEjGcVjq2wdfWq
+k1a+3ri+IQ1B/88PDE5hmMtlZf2/OMhppas4+iPERqZWjmNfA60bmmQXtJhcPIQe
+ZWp3lK/V4V8CrYmdEvURbyHhfURHavuR50t5
+                    </ds:X509Certificate>
+                </ds:X509Data>
+            </ds:KeyInfo>
+        </KeyDescriptor>
+
+        <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+
+        <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://mpass-proxy-test.csc.fi/idp/profile/SAML2/Redirect/SSO"/>
+
+    </IDPSSODescriptor>
+
+</EntityDescriptor>
+

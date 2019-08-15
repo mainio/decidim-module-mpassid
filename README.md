@@ -1,0 +1,146 @@
+# Decidim::Mpassid
+
+[![Build Status](https://travis-ci.com/mainio/decidim-module-mpassid.svg?branch=master)](https://travis-ci.com/mainio/decidim-module-mpassid)
+[![codecov](https://codecov.io/gh/mainio/decidim-module-mpassid/branch/master/graph/badge.svg)](https://codecov.io/gh/mainio/decidim-module-mpassid)
+
+A [Decidim](https://github.com/decidim/decidim) module to add MPASSid
+authentication to Decidim as a way to authenticate and authorize the users.
+
+The gem has been developed by [Mainio Tech](https://www.mainiotech.fi/).
+
+The development has been sponsored by the
+[City of Helsinki](https://www.hel.fi/).
+
+The MPASSid service is owned by the Ministry of the Education and Culture and
+operated by CSC - Tieteen tietotekniikan keskus Oy. Neither of these parties or
+the MPASSid maintainers are related to this gem in any way, nor do they provide
+technical support for it. Please contact the gem maintainers in case you find
+any issues with it.
+
+## Preparation
+
+Please refer to the
+[`omniauth-mpassid`](https://github.com/mainio/omniauth-mpassid) documentation
+in order to learn more about the preparation and getting started with MPASSid.
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem "decidim-mpassid"
+```
+
+And then execute:
+
+```bash
+$ bundle
+```
+
+After installation, you can add the initializer running the following command:
+
+```bash
+$ bundle exec rails generate decidim:mpassid:install
+```
+
+You need to set the following configuration options inside the initializer:
+
+- `:sp_entity_id` - The service provider entity ID, i.e. your applications
+  entity ID used to identify the service at the MPASSid SAML identity provider.
+  * Default: depends on the application's URL, e.g.
+    `https://www.example.org/users/auth/mpassid/metadata`
+- `:auto_email_domain` - Defines the auto-email domain for automatically
+  verified email addresses for the identified users. This makes it easier for
+  the users to use the system as they don't have to go through any extra steps
+  verifying their email addresses, as they have already verified their identity.
+  * The auto-generated email format is similar to the following string:
+    `mpassid-756be91097ac490961fd04f121cb9550@example.org`. The email will
+    always have the `mpassid-` prefix and the domain part is defined by the
+    configuration option.
+
+For more information about these options and possible other options, please
+refer to the [`omniauth-mpassid`](https://github.com/mainio/omniauth-mpassid)
+documentation.
+
+The install generator will also enable the MPASSid authentication method for
+OmniAuth by default by adding these lines your `config/secrets.yml`:
+
+```yml
+default: &default
+  # ...
+  omniauth:
+    # ...
+    mpassid:
+      enabled: false
+      icon: account-login
+development:
+  # ...
+  omniauth:
+    # ...
+    mpassid:
+      enabled: true
+      mode: test
+      icon: account-login
+```
+
+This will enable the MPASSid authentication for the development environment
+only. In case you want to enable it for other environments as well, apply the
+OmniAuth configuration keys accordingly to other environments as well.
+
+The development environment is hooking into the MPASSid testing endpoints by
+default which is defined by the `mode: test` option in the OmniAuth
+configuration. For environments that you want to hook into the MPASSid
+production environment, you can omit this configuration option completely.
+
+The example configuration will set the `account-login` icon for the the
+authentication button from the Decidim's own iconset. In case you want to have a
+better and more formal styling for the sign in button, you will need to
+customize the sign in / sign up views.
+
+## Usage
+
+After the installation steps, you will need to enable the MPASSid authorization
+from Decidim's system management panel. After enabled, you can start using it.
+
+This gem also provides a MPASSid sign in method which will automatically
+authorize the user accounts. In case the users already have an account, they
+can still authorize themselves using the MPASSid authorization.
+
+## Contributing
+
+See [Decidim](https://github.com/decidim/decidim).
+
+### Testing
+
+To run the tests run the following in the gem development path:
+
+```bash
+$ bundle
+$ DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rake test_app
+$ DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rspec
+```
+
+Note that the database user has to have rights to create and drop a database in
+order to create the dummy test app database.
+
+In case you are using [rbenv](https://github.com/rbenv/rbenv) and have the
+[rbenv-vars](https://github.com/rbenv/rbenv-vars) plugin installed for it, you
+can add these environment variables to the root directory of the project in a
+file named `.rbenv-vars`. In this case, you can omit defining these in the
+commands shown above.
+
+### Test code coverage
+
+If you want to generate the code coverage report for the tests, you can use
+the `SIMPLECOV=1` environment variable in the rspec command as follows:
+
+```bash
+$ SIMPLECOV=1 bundle exec rspec
+```
+
+This will generate a folder named `coverage` in the project root which contains
+the code coverage report.
+
+## License
+
+See [LICENSE-AGPLv3.txt](LICENSE-AGPLv3.txt).

@@ -732,13 +732,6 @@ GEM
     websocket-extensions (0.1.4)
     wisper (2.0.0)
     wisper-rspec (1.1.0)
-    xmlenc (0.7.1)
-      activemodel (>= 3.0.0)
-      activesupport (>= 3.0.0)
-      nokogiri (>= 1.6.0, < 2.0.0)
-      xmlmapper (>= 0.7.3)
-    xmlmapper (0.7.3)
-      nokogiri (~> 1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 
@@ -761,7 +754,6 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0)
   uglifier (~> 4.1)
   web-console (~> 3.5)
-  xmlenc (~> 0.7.1)
 
 RUBY VERSION
    ruby 2.6.3p62

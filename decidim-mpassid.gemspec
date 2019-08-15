@@ -28,7 +28,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "omniauth-mpassid", "~> 0.1.0"
 
   spec.add_development_dependency "decidim-dev", Decidim::Mpassid::DECIDIM_VERSION
-
-  # Required for encoding the SAML responses
-  spec.add_development_dependency "xmlenc", "~> 0.7.1"
 end

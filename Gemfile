@@ -13,13 +13,7 @@ require_relative "#{base_path}lib/decidim/mpassid/version"
 gem "decidim", Decidim::Mpassid::DECIDIM_VERSION
 gem "decidim-mpassid", path: "."
 
-# Local version of the omniauth-mpassid gem
-omniauth_path = if File.basename(__dir__) == "development_app"
-                  "../../omniauth-mpassid"
-                else
-                  "../omniauth-mpassid"
-                end
-gem "omniauth-mpassid", path: omniauth_path
+gem "omniauth-mpassid", "~> 0.1.0"
 
 gem "bootsnap", "~> 1.4"
 gem "puma", "~> 3.12"

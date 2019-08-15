@@ -1,0 +1,20 @@
+fi:
+  decidim:
+    authorization_handlers:
+      mpassid_nids:
+        explanation: Tunnista itsesi MPASSid-tunnistuspalvelun avulla.
+        name: MPASSid tunnistus
+    mpassid:
+      omniauth_callbacks:
+        failure:
+          already_authorized: Toinen käyttäjä on tunnistanut itsensä jo samalla henkilöllisyydellä.
+          conditions: Tunnistuspyyntöä ei käsitelty sallittujen aikamääreiden sisällä. Yritä uudestaan.
+          identity_bound_to_other_user: En annan användare har redan identifierats med denna identitet. Logga ut och logga in igen direkt med MPASSid.
+          session_expiration: Tunnistusistunto vanhentui. Yritä uudestaan.
+          success_status: Tunnistus epäonnistui tai peruutettiin. Yritä uudestaan.
+      verification:
+        authorizations:
+          create:
+            success: Tilisi on onnistuneesti tunnistettu MPASSid-palvelun avulla
+          destroy:
+            success: Varmennus tyhjennetty onnistuneesti.

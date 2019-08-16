@@ -6,6 +6,7 @@ require "omniauth-saml"
 require_relative "mpassid/version"
 require_relative "mpassid/engine"
 require_relative "mpassid/verification"
+require_relative "mpassid/mail_interceptors"
 
 module Decidim
   module Mpassid

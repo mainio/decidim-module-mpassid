@@ -123,6 +123,14 @@ describe Decidim::Mpassid::Engine do
     run_initializer("decidim_mpassid.omniauth_provider")
   end
 
+  it "adds the mail interceptor" do
+    expect(ActionMailer::Base).to receive(:register_interceptor).with(
+      Decidim::Mpassid::MailInterceptors::GeneratedRecipientsInterceptor
+    )
+
+    run_initializer("decidim_mpassid.mail_interceptors")
+  end
+
   describe "#add_omniauth_provider" do
     it "adds the :mpassid OmniAuth provider" do
       # Reset the constant

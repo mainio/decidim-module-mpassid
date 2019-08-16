@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "omniauth"
-require "omniauth-saml"
+require "omniauth-mpassid"
 
 require_relative "mpassid/version"
 require_relative "mpassid/engine"

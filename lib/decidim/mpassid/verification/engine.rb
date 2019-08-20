@@ -16,7 +16,9 @@ module Decidim
           root to: "authorizations#new"
         end
 
-        initializer "decidim_mpassid.verification_workflow" do
+        initializer "decidim_mpassid.verification_workflow", after: :load_config_initializers do
+          next unless Decidim::Mpassid.configured?
+
           # We cannot use the name `:mpassid` for the verification workflow
           # because otherwise the route namespace (decidim_mpassid) would
           # conflict with the main engine controlling the authentication flows.

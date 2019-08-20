@@ -12,6 +12,8 @@ module Decidim
   module Mpassid
     include ActiveSupport::Configurable
 
+    @configured = false
+
     # :production - For MPASSid production environment
     # :test - For MPASSid test environment
     config_accessor :mode, instance_reader: false
@@ -32,6 +34,15 @@ module Decidim
     # Default is set to 0 minutes which means it will never expire.
     config_accessor :authorization_expiration do
       0.minutes
+    end
+
+    def self.configured?
+      @configured
+    end
+
+    def self.configure
+      @configured = true
+      super
     end
 
     def self.mode

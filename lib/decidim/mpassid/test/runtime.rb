@@ -35,12 +35,12 @@ module Decidim
           yield self
 
           # Setup the MPASSid OmniAuth strategy for Devise
-          ::Devise.setup do |config|
-            config.omniauth(
-              :mpassid,
-              Decidim::Mpassid.omniauth_settings
-            )
-          end
+          # ::Devise.setup do |config|
+          #   config.omniauth(
+          #     :mpassid,
+          #     Decidim::Mpassid.omniauth_settings
+          #   )
+          # end
         end
       end
     end

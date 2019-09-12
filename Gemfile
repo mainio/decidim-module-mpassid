@@ -37,6 +37,3 @@ end
 group :test do
   gem "codecov", require: false
 end
-
-# Local fix CVE-2019-16109
-gem "devise", ">= 4.7.1"

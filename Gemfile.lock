@@ -752,7 +752,6 @@ DEPENDENCIES
   decidim (~> 0.18.0)
   decidim-dev (~> 0.18.0)
   decidim-mpassid!
-  devise (>= 4.7.1)
   faker (~> 1.9)
   letter_opener_web (~> 1.3)
   listen (~> 3.1)

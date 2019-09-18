@@ -106,6 +106,60 @@ This gem also provides a MPASSid sign in method which will automatically
 authorize the user accounts. In case the users already have an account, they
 can still authorize themselves using the MPASSid authorization.
 
+## Customization
+
+For some specific needs, you may need to store extra metadata for the MPASSid
+authorization or add new authorization configuration options for the
+authorization.
+
+This can be achieved by applying the following configuration to the module
+inside the initializer described above:
+
+```ruby
+# config/initializers/mpassid.rb
+
+Decidim::Mpassid.configure do |config|
+  # ... keep the default configuration as is ...
+  # Add this extra configuration:
+  config.workflow_configurator = lambda do |workflow|
+    # When expiration is set to 0 minutes, it will never expire.
+    workflow.expires_in = 0.minutes
+    workflow.action_authorizer = "CustomMpassidActionAuthorizer"
+    workflow.options do |options|
+      options.attribute :custom_option, type: :string, required: false
+    end
+  end
+  config.metadata_collector_class = CustomMpassidMetadataCollector
+end
+```
+
+For the workflow configuration options, please refer to the
+[decidim-verifications documentation](https://github.com/decidim/decidim/tree/master/decidim-verifications).
+
+For the custom metadata collector, please extend the default class as follows:
+
+```ruby
+# frozen_string_literal: true
+
+class CustomMpassidMetadataCollector < Decidim::Mpassid::Verification::MetadataCollector
+  def metadata
+    super.tap do |data|
+      # You can access the SAML attributes using the `saml_attributes` accessor:
+      school_codes = saml_attributes[:school_code]
+      unless school_codes.blank?
+        extra = school_codes.map do |school_code|
+          "Extra data for: #{school_code}"
+        end
+
+        # This will actually add the data to the user's authorization metadata
+        # hash.
+        data[:extra] = extra.join(",")
+      end
+    end
+  end
+end
+```
+
 ## Contributing
 
 See [Decidim](https://github.com/decidim/decidim).

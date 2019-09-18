@@ -15,16 +15,12 @@ describe Decidim::Mpassid::Verification::Engine do
   end
 
   it "registers the verification workflow" do
-    expiration = double
-    expect(Decidim::Mpassid.config).to receive(
-      :authorization_expiration
-    ).and_return(expiration)
     expect(Decidim::Verifications).to receive(
       :register_workflow
     ).with(:mpassid_nids) do |&block|
       workflow = double
       expect(workflow).to receive(:engine=).with(described_class)
-      expect(workflow).to receive(:expires_in=).with(expiration)
+      expect(workflow).to receive(:expires_in=).with(0.minutes)
 
       block.call(workflow)
     end

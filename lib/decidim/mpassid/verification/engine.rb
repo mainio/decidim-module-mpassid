@@ -26,7 +26,8 @@ module Decidim
           # this engine would not be found.
           Decidim::Verifications.register_workflow(:mpassid_nids) do |workflow|
             workflow.engine = Decidim::Mpassid::Verification::Engine
-            workflow.expires_in = Decidim::Mpassid.config.authorization_expiration
+
+            Decidim::Mpassid::Verification::Manager.configure_workflow(workflow)
           end
         end
 

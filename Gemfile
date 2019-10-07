@@ -13,7 +13,7 @@ require_relative "#{base_path}lib/decidim/mpassid/version"
 gem "decidim", Decidim::Mpassid::DECIDIM_VERSION
 gem "decidim-mpassid", path: "."
 
-gem "omniauth-mpassid", "~> 0.1.0"
+gem "omniauth-mpassid", "~> 0.2.0"
 
 gem "bootsnap", "~> 1.4"
 gem "puma", "~> 3.12"

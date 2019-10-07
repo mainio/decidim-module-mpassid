@@ -3,7 +3,7 @@ PATH
   specs:
     decidim-mpassid (0.18.0)
       decidim-core (~> 0.18.0)
-      omniauth-mpassid (~> 0.1.0)
+      omniauth-mpassid (~> 0.2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -501,7 +501,7 @@ GEM
       jwt (>= 1.5)
       omniauth (>= 1.1.1)
       omniauth-oauth2 (>= 1.5)
-    omniauth-mpassid (0.1.0)
+    omniauth-mpassid (0.2.0)
       omniauth-saml (~> 1.10.1)
     omniauth-oauth (1.1.0)
       oauth
@@ -755,7 +755,7 @@ DEPENDENCIES
   faker (~> 1.9)
   letter_opener_web (~> 1.3)
   listen (~> 3.1)
-  omniauth-mpassid (~> 0.1.0)
+  omniauth-mpassid (~> 0.2.0)
   puma (~> 3.12)
   spring (~> 2.0)
   spring-watcher-listen (~> 2.0)

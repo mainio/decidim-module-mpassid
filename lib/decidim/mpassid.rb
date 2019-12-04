@@ -20,7 +20,9 @@ module Decidim
 
     # Defines the auto email domain to generate verified email addresses upon
     # the user's registration automatically that have format similar to
-    # "mpassid-identifier@auto-email-domain.fi"
+    # "mpassid-identifier@auto-email-domain.fi".
+    #
+    # In case this is not defined, the default is the organization's domain.
     config_accessor :auto_email_domain
 
     config_accessor :sp_entity_id, instance_reader: false

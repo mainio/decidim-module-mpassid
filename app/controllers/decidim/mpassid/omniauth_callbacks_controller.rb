@@ -232,10 +232,8 @@ module Decidim
 
       def verified_email
         @verified_email ||= begin
-          if Decidim::Mpassid.auto_email_domain
-            domain = Decidim::Mpassid.auto_email_domain
-            "mpassid-#{person_identifier_digest}@#{domain}"
-          end
+          domain = Decidim::Mpassid.auto_email_domain || current_organization.host
+          "mpassid-#{person_identifier_digest}@#{domain}"
         end
       end
 

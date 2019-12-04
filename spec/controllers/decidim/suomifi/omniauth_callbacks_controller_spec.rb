@@ -59,6 +59,7 @@ module Decidim
 
           expect(user.name).to eq("Matti Mainio")
           expect(user.nickname).to eq("matti_mainio")
+          expect(user.email).to match(/mpassid-[a-z0-9]{32}@1.lvh.me/)
 
           authorization = Authorization.find_by(
             user: user,
@@ -78,6 +79,20 @@ module Decidim
             "student_class_level" => "9",
             "role" => "Oppilas"
           )
+        end
+
+        context "when auto_email_domain is not defined" do
+          before do
+            allow(Decidim::Mpassid).to receive(:auto_email_domain).and_return(nil)
+          end
+
+          it "auto-generates the user's email based on organization's domain" do
+            omniauth_callback_get
+
+            user = User.last
+
+            expect(user.email).to match(/mpassid-[a-z0-9]{32}@#{organization.host}/)
+          end
         end
 
         context "with multi value colums having multiple values" do

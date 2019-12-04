@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "webmock"
+
 module Decidim
   module Mpassid
     module Test
@@ -32,15 +34,7 @@ module Decidim
         end
 
         def instance_initialize
-          yield self
-
-          # Setup the MPASSid OmniAuth strategy for Devise
-          # ::Devise.setup do |config|
-          #   config.omniauth(
-          #     :mpassid,
-          #     Decidim::Mpassid.omniauth_settings
-          #   )
-          # end
+          yield self if block_given?
         end
       end
     end

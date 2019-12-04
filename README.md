@@ -49,6 +49,9 @@ You need to set the following configuration options inside the initializer:
   entity ID used to identify the service at the MPASSid SAML identity provider.
   * Default: depends on the application's URL, e.g.
     `https://www.example.org/users/auth/mpassid/metadata`
+
+Optionally you can also configure the module with the following options:
+
 - `:auto_email_domain` - Defines the auto-email domain for automatically
   verified email addresses for the identified users. This makes it easier for
   the users to use the system as they don't have to go through any extra steps
@@ -57,6 +60,8 @@ You need to set the following configuration options inside the initializer:
     `mpassid-756be91097ac490961fd04f121cb9550@example.org`. The email will
     always have the `mpassid-` prefix and the domain part is defined by the
     configuration option.
+  * In case this is not defined, the organization's host will be used as the
+    default.
 
 For more information about these options and possible other options, please
 refer to the [`omniauth-mpassid`](https://github.com/mainio/omniauth-mpassid)

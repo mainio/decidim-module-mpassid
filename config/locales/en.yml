@@ -19,3 +19,8 @@ en:
             success: You have been successfully authorized through MPASSid
           destroy:
             success: Authorization sucessfully reset.
+    system:
+      organizations:
+        omniauth_settings:
+          mpassid:
+            mode: Mode

@@ -22,4 +22,4 @@ fi:
       organizations:
         omniauth_settings:
           mpassid:
-            mode: Mode
+            mode: Tila

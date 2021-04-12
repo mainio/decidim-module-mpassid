@@ -1,6 +1,6 @@
 # Decidim::Mpassid
 
-[![Build Status](https://travis-ci.com/mainio/decidim-module-mpassid.svg?branch=master)](https://travis-ci.com/mainio/decidim-module-mpassid)
+[![Build Status](https://github.com/mainio/decidim-module-mpassid/actions/workflows/ci_mpassid.yml/badge.svg)](https://github.com/mainio/decidim-module-mpassid/actions)
 [![codecov](https://codecov.io/gh/mainio/decidim-module-mpassid/branch/master/graph/badge.svg)](https://codecov.io/gh/mainio/decidim-module-mpassid)
 
 A [Decidim](https://github.com/decidim/decidim) module to add MPASSid

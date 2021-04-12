@@ -10,8 +10,8 @@ base_path = ""
 base_path = "../" if File.basename(__dir__) == "development_app"
 require_relative "#{base_path}lib/decidim/mpassid/version"
 
-#DECIDIM_VERSION = Decidim::Mpassid::DECIDIM_VERSION
-DECIDIM_VERSION = { github: "decidim/decidim", branch: "release/0.23-stable" }
+DECIDIM_VERSION = Decidim::Mpassid::DECIDIM_VERSION
+# DECIDIM_VERSION = { github: "decidim/decidim", branch: "release/0.23-stable" }.freeze
 
 gem "decidim", DECIDIM_VERSION
 gem "decidim-mpassid", path: "."

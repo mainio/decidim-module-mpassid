@@ -170,6 +170,18 @@ module Decidim
               "role" => "Oppilas"
             )
           end
+
+          context "when user has set remember me" do
+            before do
+              confirmed_user.remember_created_at = Time.current
+              confirmed_user.save!
+            end
+
+            it "forgets the user" do
+              omniauth_callback_get
+              expect(Decidim::User.find(confirmed_user.id).remember_created_at).to eq(nil)
+            end
+          end
         end
 
         context "when the user is already signed in and authorized" do

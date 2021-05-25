@@ -17,7 +17,7 @@ module Decidim
       end
 
       def self.exists?(school_code)
-        !metadata_for_school(school_code).blank?
+        metadata_for_school(school_code).present?
       end
 
       def self.detail_for_school(school_code, key)

@@ -78,7 +78,9 @@ module Decidim
         end
 
         def school_metadata_klass
-          ::Decidim::Mpassid.school_metadata_klass.to_s.classify.safe_constantize
+          return Decidim::Mpassid.school_metadata_klass if Decidim::Mpassid.school_metadata_klass.is_a? Class
+
+          Decidim::Mpassid.school_metadata_klass.constantize
         end
       end
     end

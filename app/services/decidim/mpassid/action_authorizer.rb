@@ -3,8 +3,6 @@
 module Decidim
   module Mpassid
     class ActionAuthorizer < Decidim::Verifications::DefaultActionAuthorizer
-      attr_reader :min_class_level, :max_class_level
-
       # Overrides the parent class method, but it still uses it to keep the base
       # behavior
       def authorize
@@ -28,14 +26,14 @@ module Decidim
         ]
         rules.each do |rule_class|
           rule = rule_class.new(authorization, rule_options)
-          unless rule.valid?
-            status_code = :unauthorized
-            data[:extra_explanation] = {
-              key: rule.error_key,
-              params: rule.error_params
-            }
-            break
-          end
+          next if rule.valid?
+
+          status_code = :unauthorized
+          data[:extra_explanation] = {
+            key: rule.error_key,
+            params: rule.error_params
+          }
+          break
         end
 
         # In case reauthorization is allowed (i.e. no votes have been casted),
@@ -44,9 +42,9 @@ module Decidim
         if status_code == :unauthorized && allow_reauthorization?
           return [
             :incomplete,
-            extra_explanation: data[:extra_explanation],
-            action: :reauthorize,
-            cancel: true
+            { extra_explanation: data[:extra_explanation] },
+            { action: :reauthorize },
+            { cancel: true }
           ]
         end
 

@@ -6,6 +6,7 @@ require "webmock"
 
 require "decidim/mpassid/test/cert_store"
 require "decidim/mpassid/test/runtime"
+require "decidim/mpassid/metadata_template"
 
 require "simplecov" if ENV["SIMPLECOV"] || ENV["CODECOV"]
 if ENV["CODECOV"]
@@ -31,6 +32,8 @@ Decidim::Mpassid::Test::Runtime.initializer do
     config.mode = :test
     config.sp_entity_id = "http://1.lvh.me/users/auth/mpassid/metadata"
     config.auto_email_domain = "1.lvh.me"
+    config.action_authorizer = "Decidim::Mpassid::ActionAuthorizer"
+    config.school_metadata_klass = "Decidim::Mpassid::MetadataTemplate"
     config.extra = {
       assertion_consumer_service_url: "http://1.lvh.me/users/auth/mpassid/callback",
       idp_cert: cs.sign_certificate.to_pem,

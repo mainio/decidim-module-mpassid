@@ -4,7 +4,9 @@ module Decidim
   module Mpassid
     module AuthorizationRule
       class ElementarySchool < Base
+        # rubocop:disable Metrics/CyclomaticComplexity
         def valid?
+          return false unless school_code_in_the_list?
           return true unless authorized_user_in_elementary_school?
           return true if min_class_level.blank? && max_class_level.blank?
           return false if authorization.metadata["student_class_level"].blank?
@@ -14,8 +16,10 @@ module Decidim
               (max_class_level.blank? || level <= max_class_level)
           end
         end
+        # rubocop:enable Metrics/CyclomaticComplexity
 
         def error_key
+          return "disallowed_school" unless school_code_in_the_list?
           return "class_level_not_defined" if authorization.metadata["student_class_level"].blank?
           return "class_level_not_allowed_min" if max_class_level.blank?
           return "class_level_not_allowed_max" if min_class_level.blank?

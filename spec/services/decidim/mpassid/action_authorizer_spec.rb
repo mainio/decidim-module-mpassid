@@ -23,6 +23,46 @@ describe Decidim::Mpassid::ActionAuthorizer do
   let(:user) { create :user, organization: organization }
   let(:metadata) { {} }
 
+  context "when the user is in high school" do
+    let(:metadata) do
+      {
+        municipality: "49",
+        role: "opiskelija",
+        school_code: "00002",
+        student_class_level: nil
+      }
+    end
+
+    it "passes the authorization" do
+      expect(subject.authorize).to eq([:ok, {}])
+    end
+  end
+
+  context "when a school is not in the list" do
+    let(:metadata) do
+      {
+        municipality: "49",
+        role: "opiskelija",
+        school_code: "99999",
+        student_class_level: nil
+      }
+    end
+
+    it "is unauthorized" do
+      expect(subject.authorize).to eq(
+        [
+          :unauthorized,
+          {
+            extra_explanation: {
+              key: "disallowed_school",
+              params: { scope: "mpassid_action_authorizer.restrictions" }
+            }
+          }
+        ]
+      )
+    end
+  end
+
   context "when the user is from a wrong municipality" do
     let(:metadata) do
       {
@@ -144,23 +184,6 @@ describe Decidim::Mpassid::ActionAuthorizer do
             }
           ]
         )
-      end
-    end
-  end
-
-  context "when the user is in high school" do
-    context "when the all rules are valid" do
-      let(:metadata) do
-        {
-          municipality: "49",
-          role: "opiskelija",
-          school_code: "00048",
-          student_class_level: nil
-        }
-      end
-
-      it "passes the authorization" do
-        expect(subject.authorize).to eq([:ok, {}])
       end
     end
   end

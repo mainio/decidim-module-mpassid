@@ -26,6 +26,7 @@ module Decidim
           # this engine would not be found.
           Decidim::Verifications.register_workflow(:mpassid_nids) do |workflow|
             workflow.engine = Decidim::Mpassid::Verification::Engine
+            workflow.action_authorizer = "Decidim::Mpassid::ActionAuthorizer"
 
             Decidim::Mpassid::Verification::Manager.configure_workflow(workflow)
           end

@@ -20,6 +20,7 @@ describe Decidim::Mpassid::Verification::Engine do
     ).with(:mpassid_nids) do |&block|
       workflow = double
       expect(workflow).to receive(:engine=).with(described_class)
+      expect(workflow).to receive(:action_authorizer=).with("Decidim::Mpassid::ActionAuthorizer")
       expect(workflow).to receive(:expires_in=).with(0.minutes)
 
       block.call(workflow)

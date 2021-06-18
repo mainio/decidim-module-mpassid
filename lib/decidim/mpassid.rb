@@ -7,6 +7,7 @@ require_relative "mpassid/version"
 require_relative "mpassid/engine"
 require_relative "mpassid/verification"
 require_relative "mpassid/mail_interceptors"
+require_relative "mpassid/metadata_template"
 
 module Decidim
   module Mpassid
@@ -47,6 +48,11 @@ module Decidim
     # the SAML attributes passed from the authorization endpoint.
     config_accessor :metadata_collector_class do
       Decidim::Mpassid::Verification::MetadataCollector
+    end
+
+    # Class that includes all necessary information about schools in area.
+    config_accessor :school_metadata_klass do
+      Decidim::Mpassid::MetadataTemplate
     end
 
     def self.configured?

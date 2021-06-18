@@ -21,6 +21,7 @@ gem "omniauth-mpassid", "~> 0.3.0"
 gem "bootsnap", "~> 1.4"
 gem "puma", ">= 5.0.0"
 gem "uglifier", "~> 4.1"
+gem "webpacker", "6.0.0.beta.7"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri

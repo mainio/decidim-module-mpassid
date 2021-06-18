@@ -134,6 +134,7 @@ Decidim::Mpassid.configure do |config|
       options.attribute :custom_option, type: :string, required: false
     end
   end
+  config.school_metadata_klass = "CustomMpassidModule::CustomMpassidClass"
   config.metadata_collector_class = CustomMpassidMetadataCollector
 end
 ```

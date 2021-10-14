@@ -81,6 +81,42 @@ module Decidim
           )
         end
 
+        # Decidim core would want to redirect to the verifications path on the
+        # first sign in but we don't want that to happen as the user is already
+        # authorized during the sign in process.
+        it "redirects to the root path by default after a successful registration and first sign in" do
+          omniauth_callback_get
+
+          user = User.last
+
+          expect(user.sign_in_count).to eq(1)
+          expect(response).to redirect_to("/")
+        end
+
+        context "when the session has a pending redirect" do
+          let(:after_sign_in_path) { "/processes" }
+
+          before do
+            # Do a mock request in order to create a session
+            get "/"
+            request.session["user_return_to"] = after_sign_in_path
+          end
+
+          it "redirects to the stored location by default after a successful registration and first sign in" do
+            omniauth_callback_get(
+              env: {
+                "rack.session" => request.session,
+                "rack.session.options" => request.session.options
+              }
+            )
+
+            user = User.last
+
+            expect(user.sign_in_count).to eq(1)
+            expect(response).to redirect_to("/processes")
+          end
+        end
+
         context "when auto_email_domain is not defined" do
           before do
             allow(Decidim::Mpassid).to receive(:auto_email_domain).and_return(nil)
@@ -375,9 +411,12 @@ module Decidim
           end
         end
 
-        def omniauth_callback_get
+        def omniauth_callback_get(env: nil)
+          request_args = { params: { SAMLResponse: saml_response } }
+          request_args[:env] = env if env
+
           # Call the endpoint with the SAML response
-          get "/users/auth/mpassid/callback", params: { SAMLResponse: saml_response }
+          get "/users/auth/mpassid/callback", **request_args
         end
       end
 

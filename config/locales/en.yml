@@ -23,4 +23,5 @@ en:
       organizations:
         omniauth_settings:
           mpassid:
+            entity_id: Service entity ID
             mode: Mode

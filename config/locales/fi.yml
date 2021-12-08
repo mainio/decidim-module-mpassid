@@ -22,4 +22,5 @@ fi:
       organizations:
         omniauth_settings:
           mpassid:
+            entity_id: Palvelun ID-tunniste (Entity ID)
             mode: Tila

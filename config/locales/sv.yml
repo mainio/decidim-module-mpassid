@@ -22,4 +22,5 @@ sv:
       organizations:
         omniauth_settings:
           mpassid:
+            entity_id: Serviceenhets-ID (Entity ID)
             mode: Läge

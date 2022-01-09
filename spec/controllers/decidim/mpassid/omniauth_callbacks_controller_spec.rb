@@ -31,17 +31,17 @@ module Decidim
       describe "GET mpassid" do
         let(:saml_attributes_base) do
           {
+            mpassUsername: saml_uid,
             sn: "Mainio",
             firstName: "Matti Martti",
             givenName: "Matti",
-            municipalityCode: "091",
             school: "Stadin skole",
-            "urn:mpass.id:municipality" => "Helsinki",
-            "urn:mpass.id:schoolCode" => "00001",
-            "urn:mpass.id:class" => "9A",
-            "urn:mpass.id:classLevel" => "9",
-            "urn:mpass.id:role" => "Helsinki;00001;9A;Oppilas",
-            "urn:mpass.id:uid" => saml_uid
+            mpassEducationProviderOid: "1.2.246.562.10.346830761110",
+            mpassEducationProviderName: "Helsinki",
+            mpassSchoolCode: "00001",
+            mpassClass: "9A",
+            mpassClassLevel: "9",
+            mpassRole: "Helsinki;00001;9A;Oppilas"
           }
         end
         let(:saml_uid) { "MPASSOID.12a3bc45de678901234f5" }
@@ -68,11 +68,11 @@ module Decidim
           expect(authorization).not_to be_nil
 
           expect(authorization.metadata).to include(
-            "first_name" => "Matti Martti",
+            "first_name" => "Matti",
             "given_name" => "Matti",
             "last_name" => "Mainio",
-            "municipality" => "091",
-            "municipality_name" => "Helsinki",
+            "provider_id" => "1.2.246.562.10.346830761110",
+            "provider_name" => "Helsinki",
             "school_code" => "00001",
             "school_name" => "Stadin skole",
             "student_class" => "9A",
@@ -134,14 +134,14 @@ module Decidim
         context "with multi value colums having multiple values" do
           let(:saml_attributes) do
             {
-              municipalityCode: %w(091 853),
+              mpassEducationProviderOid: %w(1.2.246.562.10.346830761110 1.2.246.562.10.56820737825),
+              mpassEducationProviderName: %w(Helsinki Turku),
               school: ["Stadin skole", "Tuolbuoljoggeen koulu"],
-              "urn:mpass.id:municipality" => %w(Helsinki Turku),
-              "urn:mpass.id:schoolCode" => %w(00001 00002),
-              "urn:mpass.id:class" => %w(9A 9F),
-              "urn:mpass.id:classLevel" => %w(9 9),
-              "urn:mpass.id:role" => [
-                "Helsinki;00001;9A;Oppilas",
+              mpassSchoolCode: %w(00001 00002),
+              mpassClass: %w(9A 9F),
+              mpassClassLevel: %w(9 9),
+              mpassRole: [
+                "1.2.246.562.10.346830761110;00001;9A;Oppilas",
                 "Turku;00002;9F;Oppilas"
               ]
             }
@@ -162,11 +162,11 @@ module Decidim
             expect(authorization).not_to be_nil
 
             expect(authorization.metadata).to include(
-              "first_name" => "Matti Martti",
+              "first_name" => "Matti",
               "given_name" => "Matti",
               "last_name" => "Mainio",
-              "municipality" => "091,853",
-              "municipality_name" => "Helsinki,Turku",
+              "provider_id" => "1.2.246.562.10.346830761110,1.2.246.562.10.56820737825",
+              "provider_name" => "Helsinki,Turku",
               "school_code" => "00001,00002",
               "school_name" => "Stadin skole,Tuolbuoljoggeen koulu",
               "student_class" => "9A,9F",
@@ -194,11 +194,11 @@ module Decidim
             expect(authorization).not_to be_nil
 
             expect(authorization.metadata).to include(
-              "first_name" => "Matti Martti",
+              "first_name" => "Matti",
               "given_name" => "Matti",
               "last_name" => "Mainio",
-              "municipality" => "091",
-              "municipality_name" => "Helsinki",
+              "provider_id" => "1.2.246.562.10.346830761110",
+              "provider_name" => "Helsinki",
               "school_code" => "00001",
               "school_name" => "Stadin skole",
               "student_class" => "9A",
@@ -287,11 +287,11 @@ module Decidim
 
             # Check that the metadata was updated
             expect(authorizations.first.metadata).to include(
-              "first_name" => "Matti Martti",
+              "first_name" => "Matti",
               "given_name" => "Matti",
               "last_name" => "Mainio",
-              "municipality" => "091",
-              "municipality_name" => "Helsinki",
+              "provider_id" => "1.2.246.562.10.346830761110",
+              "provider_name" => "Helsinki",
               "school_code" => "00001",
               "school_name" => "Stadin skole",
               "student_class" => "9A",

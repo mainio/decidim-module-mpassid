@@ -12,7 +12,11 @@ describe Decidim::Mpassid::ActionAuthorizer do
 
   let(:options) do
     {
-      "allowed_municipalities" => "91,837,49",
+      # https://github.com/Opetushallitus/aitu/blob/master/ttk-db/resources/db/migration/V11_2__koulutustoimijat.sql
+      # 1.2.246.562.10.346830761110 = Helsinki
+      # 1.2.246.562.10.494695390410 = Vantaa
+      # 1.2.246.562.10.90008375488 = Espoo
+      "allowed_providers" => "1.2.246.562.10.346830761110,1.2.246.562.10.494695390410,1.2.246.562.10.90008375488",
       "allowed_roles" => "oppilas,opiskelija",
       "minimum_class_level" => 6,
       "maximum_class_level" => 10
@@ -26,7 +30,8 @@ describe Decidim::Mpassid::ActionAuthorizer do
   context "when the user is in high school" do
     let(:metadata) do
       {
-        municipality: "49",
+        provider_id: "1.2.246.562.10.346830761110",
+        provider_name: "Helsinki",
         role: "opiskelija",
         school_code: "00002",
         student_class_level: nil
@@ -41,7 +46,8 @@ describe Decidim::Mpassid::ActionAuthorizer do
   context "when a school is not in the list" do
     let(:metadata) do
       {
-        municipality: "49",
+        provider_id: "1.2.246.562.10.346830761110",
+        provider_name: "Helsinki",
         role: "opiskelija",
         school_code: "99999",
         student_class_level: nil
@@ -63,10 +69,11 @@ describe Decidim::Mpassid::ActionAuthorizer do
     end
   end
 
-  context "when the user is from a wrong municipality" do
+  context "when the user is from a wrong education provider (e.g. municipality)" do
     let(:metadata) do
       {
-        municipality: "853",
+        provider_id: "1.2.246.562.10.79499343246",
+        provider_name: "Tampere",
         role: "oppilas",
         school_code: "00000",
         student_class_level: "5"
@@ -79,7 +86,7 @@ describe Decidim::Mpassid::ActionAuthorizer do
           :unauthorized,
           {
             extra_explanation: {
-              key: "disallowed_municipality",
+              key: "disallowed_provider",
               params: { scope: "mpassid_action_authorizer.restrictions" }
             }
           }
@@ -91,7 +98,8 @@ describe Decidim::Mpassid::ActionAuthorizer do
   context "when the user has a wrong role" do
     let(:metadata) do
       {
-        municipality: "837",
+        provider_id: "1.2.246.562.10.494695390410",
+        provider_name: "Vantaa",
         role: "opettaja",
         school_code: "00000",
         student_class_level: "5"
@@ -117,7 +125,8 @@ describe Decidim::Mpassid::ActionAuthorizer do
     context "when the all rules are valid" do
       let(:metadata) do
         {
-          municipality: "837",
+          provider_id: "1.2.246.562.10.494695390410",
+          provider_name: "Vantaa",
           role: "oppilas",
           school_code: "00000",
           student_class_level: "8"
@@ -132,7 +141,8 @@ describe Decidim::Mpassid::ActionAuthorizer do
     context "when the user is too young" do
       let(:metadata) do
         {
-          municipality: "837",
+          provider_id: "1.2.246.562.10.494695390410",
+          provider_name: "Vantaa",
           role: "oppilas",
           school_code: "00000",
           student_class_level: "5"
@@ -161,7 +171,8 @@ describe Decidim::Mpassid::ActionAuthorizer do
     context "when the user is too old" do
       let(:metadata) do
         {
-          municipality: "837",
+          provider_id: "1.2.246.562.10.90008375488", # Espoo
+          provider_name: "Espoo",
           role: "oppilas",
           school_code: "00000",
           student_class_level: "11"

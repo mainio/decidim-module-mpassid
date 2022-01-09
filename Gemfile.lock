@@ -3,7 +3,7 @@ PATH
   specs:
     decidim-mpassid (0.24.0)
       decidim-core (~> 0.24.0)
-      omniauth-mpassid (~> 0.3.0)
+      omniauth-mpassid (~> 0.3.1)
 
 GEM
   remote: https://rubygems.org/
@@ -438,7 +438,7 @@ GEM
       sprockets-rails
     graphql (1.12.7)
     hashdiff (1.0.1)
-    hashie (4.1.0)
+    hashie (5.0.0)
     highline (2.0.3)
     html_tokenizer (0.0.7)
     htmlentities (4.3.4)
@@ -519,7 +519,7 @@ GEM
     mime-types-data (3.2021.0225)
     mini_magick (4.11.0)
     mini_mime (1.1.0)
-    mini_portile2 (2.5.0)
+    mini_portile2 (2.5.3)
     minitest (5.14.4)
     mixlib-cli (2.1.8)
     mixlib-config (3.0.9)
@@ -534,7 +534,7 @@ GEM
     netrc (0.11.0)
     nio4r (2.5.7)
     nobspw (0.6.2)
-    nokogiri (1.11.3)
+    nokogiri (1.11.7)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     oauth (0.5.6)
@@ -554,7 +554,7 @@ GEM
       oauth2 (~> 1.1)
       omniauth (~> 1.1)
       omniauth-oauth2 (>= 1.6)
-    omniauth-mpassid (0.3.0)
+    omniauth-mpassid (0.3.1)
       omniauth-saml (~> 1.10.3)
     omniauth-oauth (1.2.0)
       oauth
@@ -600,7 +600,7 @@ GEM
       multi_json
     puma (5.2.2)
       nio4r (~> 2.0)
-    racc (1.5.2)
+    racc (1.6.0)
     rack (2.2.3)
     rack-attack (6.5.0)
       rack (>= 1.0, < 3)
@@ -725,7 +725,7 @@ GEM
       rubocop-ast (>= 0.7.1)
     ruby-ole (1.2.12.2)
     ruby-progressbar (1.11.0)
-    ruby-saml (1.12.1)
+    ruby-saml (1.13.0)
       nokogiri (>= 1.10.5)
       rexml
     ruby-vips (2.1.0)
@@ -842,7 +842,7 @@ DEPENDENCIES
   faker (~> 2.14)
   letter_opener_web (~> 1.4)
   listen (~> 3.1)
-  omniauth-mpassid (~> 0.3.0)
+  omniauth-mpassid (~> 0.3.1)
   puma (>= 5.0.0)
   rubocop-faker
   rubocop-performance (~> 1.6.0)
@@ -855,4 +855,4 @@ RUBY VERSION
    ruby 2.7.1p83
 
 BUNDLED WITH
-   2.2.3
+   2.2.29

@@ -9,7 +9,7 @@ module Decidim
         # This will initially delete the requirements from the authorization options
         # so that they are not directly checked against the user's metadata.
         rule_options = {
-          allowed_municipalities: allowed_municipalities,
+          allowed_providers: allowed_providers,
           allowed_roles: allowed_roles,
           min_class_level: min_class_level,
           max_class_level: max_class_level
@@ -20,7 +20,7 @@ module Decidim
         return [status_code, data] unless status_code == :ok
 
         rules = [
-          Decidim::Mpassid::AuthorizationRule::Municipality,
+          Decidim::Mpassid::AuthorizationRule::Provider,
           Decidim::Mpassid::AuthorizationRule::Role,
           Decidim::Mpassid::AuthorizationRule::ElementarySchool
         ]
@@ -62,8 +62,8 @@ module Decidim
 
       private
 
-      def allowed_municipalities
-        @allowed_municipalities ||= options.delete("allowed_municipalities").to_s.split(",").compact.collect(&:to_s)
+      def allowed_providers
+        @allowed_providers ||= options.delete("allowed_providers").to_s.split(",").compact.collect(&:to_s)
       end
 
       def allowed_roles

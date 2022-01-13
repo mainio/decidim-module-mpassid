@@ -18,6 +18,10 @@ fi:
             success: Sinut on onnistuneesti tunnistettu MPASSid-palvelun avulla
           destroy:
             success: Varmennus tyhjennetty onnistuneesti.
+          new:
+            continue: Jatka odottamatta
+            description: Odota hetki, sinut ohjataan tunnistautumiseen...
+            title: Ohjaus
     system:
       organizations:
         omniauth_settings:

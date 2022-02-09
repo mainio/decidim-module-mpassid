@@ -3,6 +3,9 @@
 require "omniauth"
 require "omniauth-mpassid"
 
+# Make sure the omniauth methods work after OmniAuth 2.0+
+require "omniauth/rails_csrf_protection"
+
 require_relative "mpassid/version"
 require_relative "mpassid/engine"
 require_relative "mpassid/verification"

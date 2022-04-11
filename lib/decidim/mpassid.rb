@@ -27,12 +27,6 @@ module Decidim
 
     config_accessor :sp_entity_id, instance_reader: false
 
-    # Defines if you wan't to encrypt SAML requests or not, if true then you need
-    # to also provide certificate and private key.
-    config_accessor :encrypt_saml do
-      false
-    end
-
     # The certificate string for the application
     config_accessor :certificate, instance_reader: false
 

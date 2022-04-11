@@ -118,7 +118,7 @@ module Decidim
         mode: mode,
         sp_entity_id: sp_entity_id
       }
-      if config.encrypt_saml
+      if certificate && private_key
         settings[:certificate] = certificate
         settings[:private_key] = private_key
       end

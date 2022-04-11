@@ -118,7 +118,6 @@ describe Decidim::Mpassid do
       allow(subject).to receive(:sp_entity_id).and_return(sp_entity_id)
       allow(subject).to receive(:certificate).and_return(certificate)
       allow(subject).to receive(:private_key).and_return(private_key)
-      allow(config).to receive(:encrypt_saml).and_return(true)
       allow(config).to receive(:extra).and_return(extra)
 
       expect(subject.omniauth_settings).to include(

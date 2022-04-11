@@ -62,6 +62,10 @@ Optionally you can also configure the module with the following options:
     configuration option.
   * In case this is not defined, the organization's host will be used as the
     default.
+- `:certificate_file` - Path to the local certificate included in the metadata
+  sent to MPASSid.
+- `:private_key_file` - Path to the local private key (corresponding to the
+  certificate). Will be used to decrypt messages coming from MPASSid.
 
 For more information about these options and possible other options, please
 refer to the [`omniauth-mpassid`](https://github.com/mainio/omniauth-mpassid)

@@ -26,5 +26,7 @@ fi:
       organizations:
         omniauth_settings:
           mpassid:
+            certificate_file: Certificate file
             entity_id: Service entity ID
             mode: Tila
+            private_key_file: Private key file

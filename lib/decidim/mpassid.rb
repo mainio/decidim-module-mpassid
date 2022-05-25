@@ -31,6 +31,18 @@ module Decidim
 
     config_accessor :sp_entity_id, instance_reader: false
 
+    # The certificate string for the application
+    config_accessor :certificate, instance_reader: false
+
+    # The private key string for the application
+    config_accessor :private_key, instance_reader: false
+
+    # The certificate file for the application
+    config_accessor :certificate_file
+
+    # The private key file for the application
+    config_accessor :private_key_file
+
     # Extra configuration for the omniauth strategy
     config_accessor :extra do
       {}
@@ -83,11 +95,27 @@ module Decidim
       "#{application_host}/users/auth/mpassid/metadata"
     end
 
+    def self.certificate
+      return File.read(certificate_file) if certificate_file
+
+      config.certificate
+    end
+
+    def self.private_key
+      return File.read(private_key_file) if private_key_file
+
+      config.private_key
+    end
+
     def self.omniauth_settings
       settings = {
         mode: mode,
         sp_entity_id: sp_entity_id
       }
+      if certificate && private_key
+        settings[:certificate] = certificate
+        settings[:private_key] = private_key
+      end
       settings.merge!(config.extra) if config.extra.is_a?(Hash)
       settings
     end

@@ -62,19 +62,69 @@ describe Decidim::Mpassid do
     end
   end
 
+  describe ".certificate" do
+    it "returns the certificate file content when configured with a file" do
+      file = double
+      contents = double
+      allow(subject).to receive(:certificate_file).and_return(file)
+      allow(File).to receive(:read).with(file).and_return(contents)
+
+      expect(subject.certificate).to eq(contents)
+    end
+
+    context "when configured through module configuration" do
+      let(:certificate) { double }
+
+      it "returns what is set by the module configuration" do
+        allow(subject).to receive(:certificate_file).and_return(nil)
+        allow(config).to receive(:certificate).and_return(certificate)
+
+        expect(subject.certificate).to eq(certificate)
+      end
+    end
+  end
+
+  describe ".private_key" do
+    it "returns the private key file content when configured with a file" do
+      file = double
+      contents = double
+      allow(subject).to receive(:private_key_file).and_return(file)
+      allow(File).to receive(:read).with(file).and_return(contents)
+
+      expect(subject.private_key).to eq(contents)
+    end
+
+    context "when configured through module configuration" do
+      let(:private_key) { double }
+
+      it "returns what is set by the module configuration" do
+        allow(subject).to receive(:private_key_file).and_return(nil)
+        allow(config).to receive(:private_key).and_return(private_key)
+
+        expect(subject.private_key).to eq(private_key)
+      end
+    end
+  end
+
   describe ".omniauth_settings" do
     let(:mode) { double }
     let(:sp_entity_id) { double }
+    let(:certificate) { double }
+    let(:private_key) { double }
     let(:extra) { { extra1: "abc", extra2: 123 } }
 
     it "returns the expected omniauth configuration hash" do
       allow(subject).to receive(:mode).and_return(mode)
       allow(subject).to receive(:sp_entity_id).and_return(sp_entity_id)
+      allow(subject).to receive(:certificate).and_return(certificate)
+      allow(subject).to receive(:private_key).and_return(private_key)
       allow(config).to receive(:extra).and_return(extra)
 
       expect(subject.omniauth_settings).to include(
         mode: mode,
         sp_entity_id: sp_entity_id,
+        certificate: certificate,
+        private_key: private_key,
         extra1: "abc",
         extra2: 123
       )

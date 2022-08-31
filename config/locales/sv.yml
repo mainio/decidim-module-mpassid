@@ -22,4 +22,7 @@ sv:
       organizations:
         omniauth_settings:
           mpassid:
+            certificate_file: Certifikatfil
+            entity_id: Service entity ID
             mode: Läge
+            private_key_file: Privat nyckelfil

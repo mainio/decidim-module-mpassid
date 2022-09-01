@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "decidim-core", Decidim::Mpassid::DECIDIM_VERSION
-  spec.add_dependency "omniauth-mpassid", "~> 0.2.0"
+  spec.add_dependency "omniauth-mpassid", "~> 0.3.1"
 
   spec.add_development_dependency "decidim-dev", Decidim::Mpassid::DECIDIM_VERSION
 end

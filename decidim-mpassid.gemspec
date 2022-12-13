@@ -7,7 +7,7 @@ require "decidim/mpassid/version"
 Gem::Specification.new do |spec|
   spec.name = "decidim-mpassid"
   spec.version = Decidim::Mpassid::VERSION
-  spec.required_ruby_version = ">= 2.7"
+  spec.required_ruby_version = ">= 3.0"
   spec.authors = ["Antti Hukkanen"]
   spec.email = ["antti.hukkanen@mainiotech.fi"]
 

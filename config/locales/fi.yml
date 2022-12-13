@@ -20,13 +20,13 @@ fi:
             success: Varmennus tyhjennetty onnistuneesti.
           new:
             continue: Jatka odottamatta
-            description: Odota hetki, sinut ohjataan tunnistautumiseen...
-            title: Ohjaus
+            description: Ole hyvä ja odota hetki, sinut ohjataan tunnistautumispalveluun...
+            title: Uudelleenohjaus
     system:
       organizations:
         omniauth_settings:
           mpassid:
-            certificate_file: Sertifikaattitiedosto
-            entity_id: Palvelun ID-tunniste (Entity ID)
+            certificate_file: Varmenteen tiedosto
+            entity_id: Palvelun tunniste (entity ID)
             mode: Tila
             private_key_file: Yksityisen avaimen tiedosto

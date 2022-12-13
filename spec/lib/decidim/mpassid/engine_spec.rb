@@ -63,12 +63,14 @@ describe Decidim::Mpassid::Engine do
       config = double
       expect(config).to receive(:omniauth).with(
         :mpassid,
-        mode: :test,
-        sp_entity_id: "http://1.lvh.me/users/auth/mpassid/metadata",
-        assertion_consumer_service_url: "http://1.lvh.me/users/auth/mpassid/callback",
-        idp_cert: cs.sign_certificate.to_pem,
-        idp_cert_multi: {
-          signing: [cs.sign_certificate.to_pem]
+        {
+          mode: :test,
+          sp_entity_id: "http://1.lvh.me/users/auth/mpassid/metadata",
+          assertion_consumer_service_url: "http://1.lvh.me/users/auth/mpassid/callback",
+          idp_cert: cs.sign_certificate.to_pem,
+          idp_cert_multi: {
+            signing: [cs.sign_certificate.to_pem]
+          }
         }
       )
       block.call(config)

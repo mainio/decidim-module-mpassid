@@ -7,14 +7,17 @@ require "generators/decidim/mpassid/install_generator"
 describe Decidim::Mpassid::Generators::InstallGenerator do
   let(:options) { {} }
 
-  before { allow(subject).to receive(:options).and_return(options) }
+  before { subject.options = options }
 
   describe "#copy_initializer" do
     it "copies the initializer file" do
+      # We don't want the generator to actually copy the file
+      # rubocop:disable RSpec/SubjectStub
       expect(subject).to receive(:copy_file).with(
         "mpassid_initializer.rb",
         "config/initializers/mpassid.rb"
       )
+      # rubocop:enable RSpec/SubjectStub
       subject.copy_initializer
     end
 
@@ -22,10 +25,13 @@ describe Decidim::Mpassid::Generators::InstallGenerator do
       let(:options) { { test_initializer: true } }
 
       it "copies the test initializer file" do
+        # We don't want the generator to actually copy the file
+        # rubocop:disable RSpec/SubjectStub
         expect(subject).to receive(:copy_file).with(
           "mpassid_initializer_test.rb",
           "config/initializers/mpassid.rb"
         )
+        # rubocop:enable RSpec/SubjectStub
         subject.copy_initializer
       end
     end
@@ -90,14 +96,14 @@ describe Decidim::Mpassid::Generators::InstallGenerator do
     end
 
     it "enables the MPASSid authentication by modifying the secrets.yml file" do
-      expect(File).to receive(:read).and_return(secrets_yml)
-      expect(File).to receive(:readlines).and_return(secrets_yml.lines)
+      allow(File).to receive(:read).and_return(secrets_yml)
+      allow(File).to receive(:readlines).and_return(secrets_yml.lines)
       expect(File).to receive(:open).with(anything, "w") do |&block|
         file = double
         expect(file).to receive(:puts).with(secrets_yml_modified)
         block.call(file)
       end
-      expect(subject).to receive(:say_status).with(
+      expect(subject.shell).to receive(:say_status).with(
         :insert,
         "config/secrets.yml",
         :green
@@ -108,10 +114,10 @@ describe Decidim::Mpassid::Generators::InstallGenerator do
 
     context "with MPASSid already enabled" do
       it "reports identical status" do
-        expect(YAML).to receive(:safe_load).and_return(
+        allow(YAML).to receive(:safe_load).and_return(
           "default" => { "omniauth" => { "mpassid" => {} } }
         )
-        expect(subject).to receive(:say_status).with(
+        expect(subject.shell).to receive(:say_status).with(
           :identical,
           "config/secrets.yml",
           :blue

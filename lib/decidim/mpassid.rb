@@ -122,6 +122,7 @@ module Decidim
 
     # Used to determine the default service provider entity ID in case not
     # specifically set by the `sp_entity_id` configuration option.
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def self.application_host
       conf = Rails.application.config
       url_options = conf.action_controller.default_url_options
@@ -139,9 +140,10 @@ module Decidim
         port ||= 3000
       end
 
-      return "#{protocol}://#{host}:#{port}" if port && ![80, 443].include?(port.to_i)
+      return "#{protocol}://#{host}:#{port}" if port && [80, 443].exclude?(port.to_i)
 
       "#{protocol}://#{host}"
     end
+    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   end
 end

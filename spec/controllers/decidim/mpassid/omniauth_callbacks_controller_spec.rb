@@ -242,7 +242,7 @@ module Decidim
 
             it "forgets the user" do
               omniauth_callback_get
-              expect(Decidim::User.find(confirmed_user.id).remember_created_at).to eq(nil)
+              expect(Decidim::User.find(confirmed_user.id).remember_created_at).to be_nil
             end
           end
         end
@@ -456,13 +456,12 @@ module Decidim
           )
 
           ::Devise.omniauth_configs[:mpassid].strategy[:request_attributes].each do |attr|
-            key = begin
+            key =
               if attr[:friendly_name]
                 attr[:friendly_name].to_sym
               else
                 attr[:name]
               end
-            end
             value = attributes[key]
             next unless value
 
@@ -485,7 +484,7 @@ module Decidim
 
       def saml_response_from_file(file)
         filepath = file_fixture(file)
-        file_io = IO.read(filepath)
+        file_io = File.read(filepath)
         doc = Nokogiri::XML::Document.parse(file_io)
 
         yield doc if block_given?

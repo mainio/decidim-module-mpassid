@@ -8,7 +8,7 @@ require "decidim/mpassid/test/cert_store"
 require "decidim/mpassid/test/runtime"
 require "decidim/mpassid/metadata_template"
 
-require "simplecov" if ENV["SIMPLECOV"] || ENV["CODECOV"]
+require "simplecov" if ENV.fetch("SIMPLECOV", true) || ENV.fetch("CODECOV", true)
 if ENV["CODECOV"]
   require "codecov"
   SimpleCov.formatter = SimpleCov::Formatter::Codecov

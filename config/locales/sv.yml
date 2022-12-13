@@ -19,7 +19,7 @@ sv:
           destroy:
             success: Tillståndet återställs efterhand.
           new:
-            continue: Continue without waiting
+            continue: Fortsätt utan att vänta
             description: Please wait a moment, you will be redirected to the identification service...
             title: Redirection
     system:

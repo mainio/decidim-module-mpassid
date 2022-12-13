@@ -20,25 +20,13 @@ sv:
             success: Tillståndet återställs efterhand.
           new:
             continue: Fortsätt utan att vänta
-<<<<<<< HEAD
-            description: Please wait a moment, you will be redirected to the identification service...
-            title: Redirection
-=======
             description: Vänta ett ögonblick, du kommer att omdirigeras till e-legitimationstjänsten...
             title: Omdirigering
->>>>>>> master
     system:
       organizations:
         omniauth_settings:
           mpassid:
-<<<<<<< HEAD
-            certificate_file: Certificate file
-            entity_id: Service entity ID
-            mode: Läge
-            private_key_file: Private key file
-=======
             certificate_file: Certifikatfil
             entity_id: Serviceenhets-ID (Entity ID)
             mode: Läge
             private_key_file: Privat nyckelfil
->>>>>>> master

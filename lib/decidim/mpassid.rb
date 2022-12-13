@@ -3,10 +3,14 @@
 require "omniauth"
 require "omniauth-mpassid"
 
+# Make sure the omniauth methods work after OmniAuth 2.0+
+require "omniauth/rails_csrf_protection"
+
 require_relative "mpassid/version"
 require_relative "mpassid/engine"
 require_relative "mpassid/verification"
 require_relative "mpassid/mail_interceptors"
+require_relative "mpassid/metadata_template"
 
 module Decidim
   module Mpassid
@@ -26,6 +30,18 @@ module Decidim
     config_accessor :auto_email_domain
 
     config_accessor :sp_entity_id, instance_reader: false
+
+    # The certificate string for the application
+    config_accessor :certificate, instance_reader: false
+
+    # The private key string for the application
+    config_accessor :private_key, instance_reader: false
+
+    # The certificate file for the application
+    config_accessor :certificate_file
+
+    # The private key file for the application
+    config_accessor :private_key_file
 
     # Extra configuration for the omniauth strategy
     config_accessor :extra do
@@ -47,6 +63,11 @@ module Decidim
     # the SAML attributes passed from the authorization endpoint.
     config_accessor :metadata_collector_class do
       Decidim::Mpassid::Verification::MetadataCollector
+    end
+
+    # Class that includes all necessary information about schools in area.
+    config_accessor :school_metadata_klass do
+      Decidim::Mpassid::MetadataTemplate
     end
 
     def self.configured?
@@ -74,17 +95,34 @@ module Decidim
       "#{application_host}/users/auth/mpassid/metadata"
     end
 
+    def self.certificate
+      return File.read(certificate_file) if certificate_file
+
+      config.certificate
+    end
+
+    def self.private_key
+      return File.read(private_key_file) if private_key_file
+
+      config.private_key
+    end
+
     def self.omniauth_settings
       settings = {
         mode: mode,
         sp_entity_id: sp_entity_id
       }
+      if certificate && private_key
+        settings[:certificate] = certificate
+        settings[:private_key] = private_key
+      end
       settings.merge!(config.extra) if config.extra.is_a?(Hash)
       settings
     end
 
     # Used to determine the default service provider entity ID in case not
     # specifically set by the `sp_entity_id` configuration option.
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def self.application_host
       conf = Rails.application.config
       url_options = conf.action_controller.default_url_options
@@ -93,15 +131,19 @@ module Decidim
 
       host = url_options[:host]
       port = url_options[:port]
+      protocol = url_options[:protocol]
+      protocol = [80, 3000].include?(port.to_i) ? "http" : "https" if protocol.blank?
       if host.blank?
         # Default to local development environment
-        host = "http://localhost"
+        protocol = "http" if url_options[:protocol].blank?
+        host = "localhost"
         port ||= 3000
       end
 
-      return "#{host}:#{port}" if port && ![80, 443].include?(port.to_i)
+      return "#{protocol}://#{host}:#{port}" if port && [80, 443].exclude?(port.to_i)
 
-      host
+      "#{protocol}://#{host}"
     end
+    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   end
 end

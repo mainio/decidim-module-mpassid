@@ -54,7 +54,7 @@ module Decidim
         # up in an ActionController::InvalidAuthenticityToken exception.
         devise_failure_app = OmniAuth.config.on_failure
         OmniAuth.config.on_failure = proc do |env|
-          if env["PATH_INFO"] =~ %r{^/users/auth/mpassid(/.*)?}
+          if env["PATH_INFO"].match? %r{^/users/auth/mpassid(/.*)?}
             env["devise.mapping"] = ::Devise.mappings[:user]
             Decidim::Mpassid::OmniauthCallbacksController.action(
               :failure

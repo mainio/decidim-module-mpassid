@@ -1,6 +1,6 @@
 # Decidim::Mpassid
 
-[![Build Status](https://travis-ci.com/mainio/decidim-module-mpassid.svg?branch=master)](https://travis-ci.com/mainio/decidim-module-mpassid)
+[![Build Status](https://github.com/mainio/decidim-module-mpassid/actions/workflows/ci_mpassid.yml/badge.svg)](https://github.com/mainio/decidim-module-mpassid/actions)
 [![codecov](https://codecov.io/gh/mainio/decidim-module-mpassid/branch/master/graph/badge.svg)](https://codecov.io/gh/mainio/decidim-module-mpassid)
 
 A [Decidim](https://github.com/decidim/decidim) module to add MPASSid
@@ -62,6 +62,10 @@ Optionally you can also configure the module with the following options:
     configuration option.
   * In case this is not defined, the organization's host will be used as the
     default.
+- `:certificate_file` - Path to the local certificate included in the metadata
+  sent to MPASSid.
+- `:private_key_file` - Path to the local private key (corresponding to the
+  certificate). Will be used to decrypt messages coming from MPASSid.
 
 For more information about these options and possible other options, please
 refer to the [`omniauth-mpassid`](https://github.com/mainio/omniauth-mpassid)
@@ -134,6 +138,7 @@ Decidim::Mpassid.configure do |config|
       options.attribute :custom_option, type: :string, required: false
     end
   end
+  config.school_metadata_klass = "CustomMpassidModule::CustomMpassidClass"
   config.metadata_collector_class = CustomMpassidMetadataCollector
 end
 ```

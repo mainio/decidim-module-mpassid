@@ -6,8 +6,9 @@ require "webmock"
 
 require "decidim/mpassid/test/cert_store"
 require "decidim/mpassid/test/runtime"
+require "decidim/mpassid/metadata_template"
 
-require "simplecov" if ENV["SIMPLECOV"] || ENV["CODECOV"]
+require "simplecov" if ENV.fetch("SIMPLECOV", true) || ENV.fetch("CODECOV", true)
 if ENV["CODECOV"]
   require "codecov"
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
@@ -31,6 +32,8 @@ Decidim::Mpassid::Test::Runtime.initializer do
     config.mode = :test
     config.sp_entity_id = "http://1.lvh.me/users/auth/mpassid/metadata"
     config.auto_email_domain = "1.lvh.me"
+    config.action_authorizer = "Decidim::Mpassid::ActionAuthorizer"
+    config.school_metadata_klass = "Decidim::Mpassid::MetadataTemplate"
     config.extra = {
       assertion_consumer_service_url: "http://1.lvh.me/users/auth/mpassid/callback",
       idp_cert: cs.sign_certificate.to_pem,
@@ -65,5 +68,24 @@ RSpec.configure do |config|
       :get,
       "https://mpass-proxy-test.csc.fi/idp/shibboleth"
     ).to_return(status: 200, body: File.new(metadata_path), headers: {})
+
+    # Re-define the password validators due to a bug in the "email included"
+    # check which does not work well for domains such as "1.lvh.me" that we are
+    # using during tests.
+    PasswordValidator.send(:remove_const, :VALIDATION_METHODS)
+    PasswordValidator.const_set(
+      :VALIDATION_METHODS,
+      [
+        :password_too_short?,
+        :password_too_long?,
+        :not_enough_unique_characters?,
+        :name_included_in_password?,
+        :nickname_included_in_password?,
+        # :email_included_in_password?,
+        :domain_included_in_password?,
+        :password_too_common?,
+        :blacklisted?
+      ].freeze
+    )
   end
 end

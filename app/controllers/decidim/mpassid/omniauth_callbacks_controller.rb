@@ -44,6 +44,12 @@ module Decidim
           # Add the authorization for the user
           return fail_authorize unless authorize_user(current_user)
 
+          # Forget user's "remember me"
+          current_user.forget_me!
+          cookies.delete :remember_user_token, domain: current_organization.host
+          cookies.delete :remember_admin_token, domain: current_organization.host
+          cookies.update response.cookies
+
           # Show the success message and redirect back to the authorizations
           flash[:notice] = t(
             "authorizations.create.success",
@@ -51,7 +57,7 @@ module Decidim
           )
           return redirect_to(
             stored_location_for(resource || :user) ||
-            decidim_verifications.authorizations_path
+            decidim.root_path
           )
         end
 
@@ -123,10 +129,16 @@ module Decidim
       def sign_in_and_redirect(resource_or_scope, *args)
         # Add authorization for the user
         if resource_or_scope.is_a?(::Decidim::User)
-          return fail_authorize unless authorize_user(resource_or_scope)
+          result = authorize_user(resource_or_scope)
+          return fail_authorize unless result
         end
 
         super
+      end
+
+      # Disable authorization redirect for the first login
+      def first_login_and_not_authorized?(_user)
+        false
       end
 
       private

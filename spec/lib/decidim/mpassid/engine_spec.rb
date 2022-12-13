@@ -21,7 +21,7 @@ describe Decidim::Mpassid::Engine do
 
   it "mounts the routes to the core engine" do
     routes = double
-    expect(Decidim::Core::Engine).to receive(:routes).and_return(routes)
+    allow(Decidim::Core::Engine).to receive(:routes).and_return(routes)
     expect(routes).to receive(:prepend) do |&block|
       context = double
       expect(context).to receive(:mount).with(described_class => "/")
@@ -63,12 +63,14 @@ describe Decidim::Mpassid::Engine do
       config = double
       expect(config).to receive(:omniauth).with(
         :mpassid,
-        mode: :test,
-        sp_entity_id: "http://1.lvh.me/users/auth/mpassid/metadata",
-        assertion_consumer_service_url: "http://1.lvh.me/users/auth/mpassid/callback",
-        idp_cert: cs.sign_certificate.to_pem,
-        idp_cert_multi: {
-          signing: [cs.sign_certificate.to_pem]
+        {
+          mode: :test,
+          sp_entity_id: "http://1.lvh.me/users/auth/mpassid/metadata",
+          assertion_consumer_service_url: "http://1.lvh.me/users/auth/mpassid/callback",
+          idp_cert: cs.sign_certificate.to_pem,
+          idp_cert_multi: {
+            signing: [cs.sign_certificate.to_pem]
+          }
         }
       )
       block.call(config)
@@ -81,11 +83,11 @@ describe Decidim::Mpassid::Engine do
     expect(OmniAuth.config).to receive(:on_failure=) do |proc|
       env = double
       action = double
-      expect(env).to receive(:[]).with("PATH_INFO").and_return(
+      allow(env).to receive(:[]).with("PATH_INFO").and_return(
         "/users/auth/mpassid"
       )
       expect(env).to receive(:[]=).with("devise.mapping", ::Devise.mappings[:user])
-      expect(Decidim::Mpassid::OmniauthCallbacksController).to receive(
+      allow(Decidim::Mpassid::OmniauthCallbacksController).to receive(
         :action
       ).with(:failure).and_return(action)
       expect(action).to receive(:call).with(env)
@@ -99,10 +101,10 @@ describe Decidim::Mpassid::Engine do
   it "falls back on the default OmniAuth failure app" do
     failure_app = double
 
-    expect(OmniAuth.config).to receive(:on_failure).and_return(failure_app)
+    allow(OmniAuth.config).to receive(:on_failure).and_return(failure_app)
     expect(OmniAuth.config).to receive(:on_failure=) do |proc|
       env = double
-      expect(env).to receive(:[]).with("PATH_INFO").and_return(
+      allow(env).to receive(:[]).with("PATH_INFO").and_return(
         "/something/else"
       )
       expect(failure_app).to receive(:call).with(env)

@@ -19,14 +19,14 @@ fi:
           destroy:
             success: Varmennus tyhjennetty onnistuneesti.
           new:
-            continue: Continue without waiting
-            description: Please wait a moment, you will be redirected to the identification service...
-            title: Redirection
+            continue: Jatka odottamatta
+            description: Ole hyvä ja odota hetki, sinut ohjataan tunnistautumispalveluun...
+            title: Uudelleenohjaus
     system:
       organizations:
         omniauth_settings:
           mpassid:
-            certificate_file: Certificate file
-            entity_id: Service entity ID
+            certificate_file: Varmenteen tiedosto
+            entity_id: Palvelun tunniste (entity ID)
             mode: Tila
-            private_key_file: Private key file
+            private_key_file: Yksityisen avaimen tiedosto

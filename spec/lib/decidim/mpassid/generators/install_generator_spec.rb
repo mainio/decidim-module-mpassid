@@ -80,11 +80,11 @@ describe Decidim::Mpassid::Generators::InstallGenerator do
     let(:secrets_yml_modified) do
       default = "    mpassid:\n"
       default += "      enabled: false\n"
-      default += "      icon: account-login\n"
+      default += "      icon_path: media/images/mpassid_logo.svg\n"
       development = "    mpassid:\n"
       development += "      enabled: true\n"
       development += "      mode: test\n"
-      development += "      icon: account-login\n"
+      development += "      icon_path: media/images/mpassid_logo.svg\n"
 
       secrets_yml_template.gsub(
         /%MPASSID_INJECTION_DEFAULT%/,

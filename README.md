@@ -89,7 +89,7 @@ development:
     mpassid:
       enabled: true
       mode: test
-      icon: account-login
+      icon_path: media/images/mpassid_logo.svg
 ```
 
 This will enable the MPASSid authentication for the development environment
@@ -101,10 +101,10 @@ default which is defined by the `mode: test` option in the OmniAuth
 configuration. For environments that you want to hook into the MPASSid
 production environment, you can omit this configuration option completely.
 
-The example configuration will set the `account-login` icon for the the
-authentication button from the Decidim's own iconset. In case you want to have a
-better and more formal styling for the sign in button, you will need to
-customize the sign in / sign up views.
+The example configuration will set the `mpassid_logo` -icon for the the
+authentication button from two icons shipped with this module. This default icon is a white Mpassid -logo. In case you
+want to have a colourized logo with a white background you will need to change the path to
+"media/images/mpassid_logo_color.svg" from "System management panel".
 
 ## Usage
 

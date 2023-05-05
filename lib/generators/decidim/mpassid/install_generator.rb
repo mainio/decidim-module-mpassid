@@ -127,7 +127,7 @@ module Decidim
             else
               @final += "      enabled: false\n"
             end
-            @final += "      icon: account-login\n"
+            @final += "      icon_path: media/images/mpassid_logo.svg\n"
           end
         end
       end

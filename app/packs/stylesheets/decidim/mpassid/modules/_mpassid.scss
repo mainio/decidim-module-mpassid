@@ -1,52 +1,27 @@
 .button--mpassid{
-
-  .button--social__icon{
-    width: 48px;
-
-    svg.mpass{
-      fill: inherit;
-      width: inherit;
-      height: inherit;
-      max-width: 42px;
-      max-height: 42px;
-      position: relative;
-      bottom: 11px;
-      right: 11px;
-
-      &.icon--mpassid{
-        > use{
-          display: none;
-        }
-      }
-    }
-
-    svg.mpassc{
-      fill: inherit;
-      width: inherit;
-      height: inherit;
-      max-width: 42px;
-      max-height: 42px;
-      position: relative;
-      bottom: 9px;
-      right: 11px;
-
-      &.icon--mpassid{
-        > use{
-          display: none;
-        }
-      }
+  &.button--social--mini{
+    .button--social__icon{
+      padding: 0 0.4rem;
     }
   }
 
-  &.button--social--mini{
-    .button--social__icon{
-      font-size: 0;
-      min-width: auto;
-      padding: 0;
+  .button--social__icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 3rem;
+    padding: 0 0.3rem;
 
-      svg.icon{
-        margin: 1px;
-      }
+    svg.mpass,
+    svg.mpassc{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    svg.mpass{
+      fill: inherit;
     }
   }
 }

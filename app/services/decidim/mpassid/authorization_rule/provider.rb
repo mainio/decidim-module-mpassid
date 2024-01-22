@@ -6,9 +6,9 @@ module Decidim
       class Provider < Base
         def valid?
           return true if allowed_providers.blank?
-          return false if authorization.metadata["provider_id"].blank?
+          return false if authorization.metadata["provider_code"].blank?
 
-          authorized_providers = authorization.metadata["provider_id"].to_s.split(",").compact.collect(&:to_s)
+          authorized_providers = authorization.metadata["provider_code"].to_s.split(",").compact.collect(&:to_s)
           authorized_providers.any? { |provider| allowed_providers.include?(provider) }
         end
 

@@ -30,7 +30,7 @@ describe Decidim::Mpassid::ActionAuthorizer do
   context "when the user is in high school" do
     let(:metadata) do
       {
-        provider_id: "1.2.246.562.10.346830761110",
+        provider_code: "1.2.246.562.10.346830761110",
         provider_name: "Helsinki",
         role: "opiskelija",
         school_code: "00002",
@@ -46,7 +46,7 @@ describe Decidim::Mpassid::ActionAuthorizer do
   context "when a school is not in the list" do
     let(:metadata) do
       {
-        provider_id: "1.2.246.562.10.346830761110",
+        provider_code: "1.2.246.562.10.346830761110",
         provider_name: "Helsinki",
         role: "opiskelija",
         school_code: "99999",
@@ -72,7 +72,7 @@ describe Decidim::Mpassid::ActionAuthorizer do
   context "when the user is from a wrong education provider (e.g. municipality)" do
     let(:metadata) do
       {
-        provider_id: "1.2.246.562.10.79499343246",
+        provider_code: "1.2.246.562.10.79499343246",
         provider_name: "Tampere",
         role: "oppilas",
         school_code: "00000",
@@ -98,7 +98,7 @@ describe Decidim::Mpassid::ActionAuthorizer do
   context "when the user has a wrong role" do
     let(:metadata) do
       {
-        provider_id: "1.2.246.562.10.494695390410",
+        provider_code: "1.2.246.562.10.494695390410",
         provider_name: "Vantaa",
         role: "opettaja",
         school_code: "00000",
@@ -125,7 +125,7 @@ describe Decidim::Mpassid::ActionAuthorizer do
     context "when the all rules are valid" do
       let(:metadata) do
         {
-          provider_id: "1.2.246.562.10.494695390410",
+          provider_code: "1.2.246.562.10.494695390410",
           provider_name: "Vantaa",
           role: "oppilas",
           school_code: "00000",
@@ -141,7 +141,7 @@ describe Decidim::Mpassid::ActionAuthorizer do
     context "when the user is too young" do
       let(:metadata) do
         {
-          provider_id: "1.2.246.562.10.494695390410",
+          provider_code: "1.2.246.562.10.494695390410",
           provider_name: "Vantaa",
           role: "oppilas",
           school_code: "00000",
@@ -171,7 +171,7 @@ describe Decidim::Mpassid::ActionAuthorizer do
     context "when the user is too old" do
       let(:metadata) do
         {
-          provider_id: "1.2.246.562.10.90008375488", # Espoo
+          provider_code: "1.2.246.562.10.90008375488", # Espoo
           provider_name: "Espoo",
           role: "oppilas",
           school_code: "00000",

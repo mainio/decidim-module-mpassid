@@ -33,15 +33,12 @@ module Decidim
           {
             mpassUsername: saml_uid,
             sn: "Mainio",
-            firstName: "Matti Martti",
+            nickname: "Martti",
             givenName: "Matti",
-            school: "Stadin skole",
-            mpassEducationProviderOid: "1.2.246.562.10.346830761110",
-            mpassEducationProviderName: "Helsinki",
-            mpassSchoolCode: "00001",
-            mpassClass: "9A",
+            mpassSchoolInfo: ["00001;Stadin skole", "1.2.246.562.99.00000000001;Stadin skole"],
+            mpassEducationProviderInfo: ["1.2.246.562.10.346830761110;Helsinki"],
             mpassClassLevel: "9",
-            mpassRole: "Helsinki;00001;9A;Oppilas"
+            mpassRole: "1.2.246.562.10.346830761110;00001;9A;Oppilas;1;1.2.246.562.99.00000000001;"
           }
         end
         let(:saml_uid) { "MPASSOID.12a3bc45de678901234f5" }
@@ -57,8 +54,8 @@ module Decidim
 
           user = User.last
 
-          expect(user.name).to eq("Matti Mainio")
-          expect(user.nickname).to eq("matti_mainio")
+          expect(user.name).to eq("Martti Mainio")
+          expect(user.nickname).to eq("martti_mainio")
           expect(user.email).to match(/mpassid-[a-z0-9]{32}@1.lvh.me/)
 
           authorization = Authorization.find_by(
@@ -68,15 +65,16 @@ module Decidim
           expect(authorization).not_to be_nil
 
           expect(authorization.metadata).to include(
-            "first_name" => "Matti",
+            "first_name" => "Martti",
             "given_name" => "Matti",
             "last_name" => "Mainio",
-            "provider_id" => "1.2.246.562.10.346830761110",
+            "provider_code" => "1.2.246.562.10.346830761110",
             "provider_name" => "Helsinki",
             "school_code" => "00001",
+            "school_oid" => "1.2.246.562.99.00000000001",
             "school_name" => "Stadin skole",
-            "student_class" => "9A",
             "student_class_level" => "9",
+            "group" => "9A",
             "role" => "Oppilas"
           )
         end
@@ -134,15 +132,17 @@ module Decidim
         context "with multi value colums having multiple values" do
           let(:saml_attributes) do
             {
-              mpassEducationProviderOid: %w(1.2.246.562.10.346830761110 1.2.246.562.10.56820737825),
-              mpassEducationProviderName: %w(Helsinki Turku),
-              school: ["Stadin skole", "Tuolbuoljoggeen koulu"],
-              mpassSchoolCode: %w(00001 00002),
-              mpassClass: %w(9A 9F),
-              mpassClassLevel: %w(9 9),
+              mpassSchoolInfo: [
+                "00001;Stadin skole",
+                "1.2.246.562.99.00000000001;Stadin skole",
+                "00002;Tuolbuoljoggeen koulu",
+                "1.2.246.562.99.00000000002;Tuolbuoljoggeen koulu"
+              ],
+              mpassEducationProviderInfo: ["1.2.246.562.10.346830761110;Helsinki", "1.2.246.562.10.56820737825;Turku"],
+              mpassClassLevel: "9",
               mpassRole: [
-                "1.2.246.562.10.346830761110;00001;9A;Oppilas",
-                "Turku;00002;9F;Oppilas"
+                "1.2.246.562.10.346830761110;00001;9A;Oppilas;1;1.2.246.562.99.00000000001;",
+                "1.2.246.562.10.56820737825;00002;9F;Oppilas;1;1.2.246.562.99.00000000002;"
               ]
             }
           end
@@ -152,8 +152,8 @@ module Decidim
 
             user = User.last
 
-            expect(user.name).to eq("Matti Mainio")
-            expect(user.nickname).to eq("matti_mainio")
+            expect(user.name).to eq("Martti Mainio")
+            expect(user.nickname).to eq("martti_mainio")
 
             authorization = Authorization.find_by(
               user: user,
@@ -162,15 +162,16 @@ module Decidim
             expect(authorization).not_to be_nil
 
             expect(authorization.metadata).to include(
-              "first_name" => "Matti",
+              "first_name" => "Martti",
               "given_name" => "Matti",
               "last_name" => "Mainio",
-              "provider_id" => "1.2.246.562.10.346830761110,1.2.246.562.10.56820737825",
+              "provider_code" => "1.2.246.562.10.346830761110,1.2.246.562.10.56820737825",
               "provider_name" => "Helsinki,Turku",
               "school_code" => "00001,00002",
+              "school_oid" => "1.2.246.562.99.00000000001,1.2.246.562.99.00000000002",
               "school_name" => "Stadin skole,Tuolbuoljoggeen koulu",
-              "student_class" => "9A,9F",
-              "student_class_level" => "9,9",
+              "student_class_level" => "9",
+              "group" => "9A,9F",
               "role" => "Oppilas,Oppilas"
             )
           end
@@ -184,8 +185,8 @@ module Decidim
           it "adds the authorization to the signed in user" do
             omniauth_callback_get
 
-            expect(confirmed_user.name).not_to eq("Matti Mainio")
-            expect(confirmed_user.nickname).not_to eq("matti_mainio")
+            expect(confirmed_user.name).not_to eq("Martti Mainio")
+            expect(confirmed_user.nickname).not_to eq("martti_mainio")
 
             authorization = Authorization.find_by(
               user: confirmed_user,
@@ -194,15 +195,16 @@ module Decidim
             expect(authorization).not_to be_nil
 
             expect(authorization.metadata).to include(
-              "first_name" => "Matti",
+              "first_name" => "Martti",
               "given_name" => "Matti",
               "last_name" => "Mainio",
-              "provider_id" => "1.2.246.562.10.346830761110",
+              "provider_code" => "1.2.246.562.10.346830761110",
               "provider_name" => "Helsinki",
               "school_code" => "00001",
+              "school_oid" => "1.2.246.562.99.00000000001",
               "school_name" => "Stadin skole",
-              "student_class" => "9A",
               "student_class_level" => "9",
+              "group" => "9A",
               "role" => "Oppilas"
             )
           end
@@ -274,8 +276,8 @@ module Decidim
             omniauth_callback_get
 
             # Check that the user record was NOT updated
-            expect(confirmed_user.name).not_to eq("Matti Mainio")
-            expect(confirmed_user.nickname).not_to eq("matti_mainio")
+            expect(confirmed_user.name).not_to eq("Martti Mainio")
+            expect(confirmed_user.nickname).not_to eq("martti_mainio")
 
             # Check that the authorization is the same one
             authorizations = Authorization.where(
@@ -287,15 +289,16 @@ module Decidim
 
             # Check that the metadata was updated
             expect(authorizations.first.metadata).to include(
-              "first_name" => "Matti",
+              "first_name" => "Martti",
               "given_name" => "Matti",
               "last_name" => "Mainio",
-              "provider_id" => "1.2.246.562.10.346830761110",
+              "provider_code" => "1.2.246.562.10.346830761110",
               "provider_name" => "Helsinki",
               "school_code" => "00001",
+              "school_oid" => "1.2.246.562.99.00000000001",
               "school_name" => "Stadin skole",
-              "student_class" => "9A",
               "student_class_level" => "9",
+              "group" => "9A",
               "role" => "Oppilas"
             )
           end

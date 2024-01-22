@@ -3,7 +3,7 @@ PATH
   specs:
     decidim-mpassid (0.27.0)
       decidim-core (~> 0.27.0)
-      omniauth-mpassid (~> 0.5.1)
+      omniauth-mpassid (~> 0.6.0)
 
 GEM
   remote: https://rubygems.org/
@@ -534,7 +534,7 @@ GEM
       oauth2 (~> 2.0.6)
       omniauth (~> 2.0)
       omniauth-oauth2 (~> 1.8.0)
-    omniauth-mpassid (0.5.1)
+    omniauth-mpassid (0.6.0)
       omniauth-saml (~> 2.0)
     omniauth-oauth (1.2.0)
       oauth

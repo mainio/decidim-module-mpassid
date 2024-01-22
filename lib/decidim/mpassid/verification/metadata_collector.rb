@@ -52,9 +52,9 @@ module Decidim
             info_parts = info_string.split(";")
             data <<
               if info_parts[0].match?(/\A[0-9]+\z/)
-                { code: info_parts[0], name: info_parts[1] }
+                { code: info_parts[0]&.strip, name: info_parts[1]&.strip }
               else
-                { oid: info_parts[0], name: info_parts[1] }
+                { oid: info_parts[0]&.strip, name: info_parts[1]&.strip }
               end
           end
 
@@ -67,7 +67,7 @@ module Decidim
 
           provider_info.each do |info_string|
             info_parts = info_string.split(";")
-            data[info_parts[0]] = info_parts[1]
+            data[info_parts[0]] = info_parts[1]&.strip
           end
 
           data
@@ -96,7 +96,7 @@ module Decidim
               role_code: role_parts[4],
               school_oid: role_parts[5],
               branch_oid: role_parts[6]
-            }
+            }.transform_values { |v| v&.strip }
           end
 
           data

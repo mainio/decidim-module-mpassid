@@ -13,6 +13,10 @@ module Decidim
       # This is called always after the user returns from the authentication
       # flow from the MPASSid identity provider.
       def mpassid
+        if (redirect_path = session[:saml_redirect_url]).present? && redirect_path.match?(%r{\A/.*\z})
+          store_location_for(:user, redirect_path)
+        end
+
         if user_signed_in?
           # The user is most likely returning from an authorization request
           # because they are already signed in. In this case, add the

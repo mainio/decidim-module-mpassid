@@ -13,7 +13,7 @@ module Decidim
       # This is called always after the user returns from the authentication
       # flow from the MPASSid identity provider.
       def mpassid
-        if (redirect_path = session[:saml_redirect_url]).present? && redirect_path.match?(%r{\A/.*\z})
+        if (redirect_path = session[:saml_redirect_url]).present? && redirect_path.match?(%r{\A/[^/].*\z})
           store_location_for(:user, redirect_path)
         end
 

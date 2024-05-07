@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     decidim-mpassid (0.27.0)
-      decidim-core (~> 0.27.6)
+      decidim-core (~> 0.27.0)
       omniauth-mpassid (~> 0.6.1)
 
 GEM
@@ -814,8 +814,8 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (~> 1.4)
   byebug (~> 11.0)
-  decidim (~> 0.27.6)
-  decidim-dev (~> 0.27.6)
+  decidim (~> 0.27.0)
+  decidim-dev (~> 0.27.0)
   decidim-mpassid!
   faker (~> 2.14)
   letter_opener_web (~> 2.0)

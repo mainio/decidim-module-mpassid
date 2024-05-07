@@ -5,8 +5,8 @@ require "spec_helper"
 describe Decidim::Mpassid::ActionAuthorizer do
   subject { described_class.new(authorization, options, component, resource) }
 
-  let(:organization) { create :organization }
-  let(:process) { create(:participatory_process, organization: organization) }
+  let(:organization) { create(:organization) }
+  let(:process) { create(:participatory_process, organization:) }
   let(:component) { create(:component, manifest_name: "budgets", participatory_space: process) }
   let(:resource) { nil }
 
@@ -23,8 +23,8 @@ describe Decidim::Mpassid::ActionAuthorizer do
     }
   end
 
-  let(:authorization) { create(:authorization, :granted, user: user, metadata: metadata) }
-  let(:user) { create :user, organization: organization }
+  let(:authorization) { create(:authorization, :granted, user:, metadata:) }
+  let(:user) { create(:user, organization:) }
   let(:metadata) { {} }
 
   context "when the user is in high school" do

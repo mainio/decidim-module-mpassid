@@ -9,12 +9,12 @@ describe Decidim::Mpassid::Engine do
   # manually. Normally this is done when the application's middleware stack is
   # loaded.
   after do
-    unless ::Devise.omniauth_configs[:mpassid].strategy
-      ::OmniAuth::Strategies::MPASSid.new(
+    unless Devise.omniauth_configs[:mpassid].strategy
+      OmniAuth::Strategies::MPASSid.new(
         Rails.application,
         Decidim::Mpassid.omniauth_settings
       ) do |strategy|
-        ::Devise.omniauth_configs[:mpassid].strategy = strategy
+        Devise.omniauth_configs[:mpassid].strategy = strategy
       end
     end
   end
@@ -38,7 +38,7 @@ describe Decidim::Mpassid::Engine do
       expect(
         Decidim::Core::Engine.routes.recognize_path(
           "/users/auth/mpassid",
-          method: method
+          method:
         )
       ).to eq(
         controller: "decidim/mpassid/omniauth_callbacks",
@@ -47,7 +47,7 @@ describe Decidim::Mpassid::Engine do
       expect(
         Decidim::Core::Engine.routes.recognize_path(
           "/users/auth/mpassid/callback",
-          method: method
+          method:
         )
       ).to eq(
         controller: "decidim/mpassid/omniauth_callbacks",
@@ -86,7 +86,7 @@ describe Decidim::Mpassid::Engine do
       allow(env).to receive(:[]).with("PATH_INFO").and_return(
         "/users/auth/mpassid"
       )
-      expect(env).to receive(:[]=).with("devise.mapping", ::Devise.mappings[:user])
+      expect(env).to receive(:[]=).with("devise.mapping", Devise.mappings[:user])
       allow(Decidim::Mpassid::OmniauthCallbacksController).to receive(
         :action
       ).with(:failure).and_return(action)

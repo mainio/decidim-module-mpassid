@@ -157,7 +157,7 @@ module Decidim
         else
           authorization = Decidim::Authorization.find_or_initialize_by(
             name: "mpassid_nids",
-            user: user
+            user:
           )
         end
 

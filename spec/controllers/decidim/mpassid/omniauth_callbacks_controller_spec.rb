@@ -15,7 +15,7 @@ module Decidim
 
       # For testing with signed in user
       let(:confirmed_user) do
-        create(:user, :confirmed, organization: organization)
+        create(:user, :confirmed, organization:)
       end
 
       before do
@@ -59,7 +59,7 @@ module Decidim
           expect(user.email).to match(/mpassid-[a-z0-9]{32}@1.lvh.me/)
 
           authorization = Authorization.find_by(
-            user: user,
+            user:,
             name: "mpassid_nids"
           )
           expect(authorization).not_to be_nil
@@ -156,7 +156,7 @@ module Decidim
             expect(user.nickname).to eq("martti_mainio")
 
             authorization = Authorization.find_by(
-              user: user,
+              user:,
               name: "mpassid_nids"
             )
             expect(authorization).not_to be_nil
@@ -306,12 +306,12 @@ module Decidim
 
         context "when another user is already identified with the same identity" do
           let(:another_user) do
-            create(:user, :confirmed, organization: organization)
+            create(:user, :confirmed, organization:)
           end
 
           before do
             another_user.identities.create!(
-              organization: organization,
+              organization:,
               provider: "mpassid",
               uid: saml_uid
             )
@@ -337,7 +337,7 @@ module Decidim
 
         context "when another user is already authorized with the same identity" do
           let(:another_user) do
-            create(:user, :confirmed, organization: organization)
+            create(:user, :confirmed, organization:)
           end
 
           before do

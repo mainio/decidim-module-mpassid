@@ -109,8 +109,8 @@ module Decidim
 
     def self.omniauth_settings
       settings = {
-        mode: mode,
-        sp_entity_id: sp_entity_id
+        mode:,
+        sp_entity_id:
       }
       if certificate && private_key
         settings[:certificate] = certificate

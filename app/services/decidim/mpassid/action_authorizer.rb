@@ -9,10 +9,10 @@ module Decidim
         # This will initially delete the requirements from the authorization options
         # so that they are not directly checked against the user's metadata.
         rule_options = {
-          allowed_providers: allowed_providers,
-          allowed_roles: allowed_roles,
-          min_class_level: min_class_level,
-          max_class_level: max_class_level
+          allowed_providers:,
+          allowed_roles:,
+          min_class_level:,
+          max_class_level:
         }
 
         status_code, data = *super

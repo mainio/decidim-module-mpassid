@@ -69,10 +69,10 @@ describe Decidim::Mpassid::Generators::InstallGenerator do
 
     let(:secrets_yml) do
       secrets_yml_template.gsub(
-        /%MPASSID_INJECTION_DEFAULT%/,
+        "%MPASSID_INJECTION_DEFAULT%",
         ""
       ).gsub(
-        /%MPASSID_INJECTION_DEVELOPMENT%/,
+        "%MPASSID_INJECTION_DEVELOPMENT%",
         ""
       )
     end
@@ -87,17 +87,16 @@ describe Decidim::Mpassid::Generators::InstallGenerator do
       development += "      icon_path: media/images/mpassid_logo.svg\n"
 
       secrets_yml_template.gsub(
-        /%MPASSID_INJECTION_DEFAULT%/,
+        "%MPASSID_INJECTION_DEFAULT%",
         default
       ).gsub(
-        /%MPASSID_INJECTION_DEVELOPMENT%/,
+        "%MPASSID_INJECTION_DEVELOPMENT%",
         development
       )
     end
 
     it "enables the MPASSid authentication by modifying the secrets.yml file" do
-      allow(File).to receive(:read).and_return(secrets_yml)
-      allow(File).to receive(:readlines).and_return(secrets_yml.lines)
+      allow(File).to receive_messages(read: secrets_yml, readlines: secrets_yml.lines)
       expect(File).to receive(:open).with(anything, "w") do |&block|
         file = double
         expect(file).to receive(:puts).with(secrets_yml_modified)

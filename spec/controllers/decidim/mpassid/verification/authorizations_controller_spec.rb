@@ -5,7 +5,7 @@ require "spec_helper"
 module Decidim
   module Mpassid
     module Verification
-      describe AuthorizationsController, type: :controller do
+      describe AuthorizationsController do
         routes { Decidim::Mpassid::Verification::Engine.routes }
 
         render_views

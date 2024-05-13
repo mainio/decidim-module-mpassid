@@ -136,6 +136,23 @@ describe Decidim::Mpassid::ActionAuthorizer do
       it "passes the authorization" do
         expect(subject.authorize).to eq([:ok, {}])
       end
+
+      context "and the student class level is missing but group is defined" do
+        let(:metadata) do
+          {
+            provider_code: "1.2.246.562.10.494695390410",
+            provider_name: "Vantaa",
+            role: "oppilas",
+            school_code: "00000",
+            student_class_level: nil,
+            group: "8B"
+          }
+        end
+
+        it "passes the authorization" do
+          expect(subject.authorize).to eq([:ok, {}])
+        end
+      end
     end
 
     context "when the user is too young" do

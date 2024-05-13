@@ -9,7 +9,7 @@ module Decidim
           return false unless school_code_in_the_list?
           return true unless authorized_user_in_elementary_school?
           return true if min_class_level.blank? && max_class_level.blank?
-          return false if authorization.metadata["student_class_level"].blank?
+          return false if authorized_class_levels.blank?
 
           authorized_class_levels.any? do |level|
             (min_class_level.blank? || level >= min_class_level) &&
@@ -20,7 +20,7 @@ module Decidim
 
         def error_key
           return "disallowed_school" unless school_code_in_the_list?
-          return "class_level_not_defined" if authorization.metadata["student_class_level"].blank?
+          return "class_level_not_defined" if authorized_class_levels.blank?
           return "class_level_not_allowed_min" if max_class_level.blank?
           return "class_level_not_allowed_max" if min_class_level.blank?
           return "class_level_not_allowed_one" if max_class_level == min_class_level
@@ -29,7 +29,7 @@ module Decidim
         end
 
         def error_params
-          return super if authorization.metadata["student_class_level"].blank?
+          return super if authorized_class_levels.blank?
 
           super.tap do |params|
             if max_class_level.blank?
@@ -68,8 +68,20 @@ module Decidim
         end
 
         def authorized_class_levels
-          @authorized_class_levels ||= authorization.metadata["student_class_level"].split(",").map do |group|
-            group.gsub(/^[^0-9]*/, "").to_i
+          @authorized_class_levels ||= begin
+            # In some schools the student class level is not defined in which
+            # case, we can use the group attribute which contains the class with
+            # the group code, e.g. "A", "B", "C".
+            class_levels = authorization.metadata["student_class_level"]
+            class_levels = authorization.metadata["group"] if class_levels.blank?
+
+            if class_levels.blank?
+              []
+            else
+              class_levels.split(",").map do |group|
+                group.gsub(/^[^0-9]*/, "").to_i
+              end
+            end
           end
         end
 

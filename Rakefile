@@ -5,6 +5,7 @@ require "decidim/dev/common_rake"
 def install_module(path)
   Dir.chdir(path) do
     system("bundle exec rake db:migrate")
+    system("bundle exec rails generate decidim:mpassid:install --test-initializer true")
   end
 end
 
@@ -17,10 +18,6 @@ end
 desc "Generates a dummy app for testing"
 task test_app: "decidim:generate_external_test_app" do
   install_module("spec/decidim_dummy_app")
-
-  Dir.chdir("spec/decidim_dummy_app") do
-    system("bundle exec rails generate decidim:mpassid:install --test-initializer true")
-  end
 end
 
 desc "Generates a development app"

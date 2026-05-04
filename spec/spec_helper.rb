@@ -15,7 +15,7 @@ Decidim::Dev.dummy_app_path =
 
 Decidim::Mpassid::Test::Runtime.initializer do
   # Silence the OmniAuth logger
-  OmniAuth.config.logger = Logger.new("/dev/null")
+  OmniAuth.config.logger = Logger.new(File::NULL)
 
   # Configure the MPASSid module
   Decidim::Mpassid.configure do |config|

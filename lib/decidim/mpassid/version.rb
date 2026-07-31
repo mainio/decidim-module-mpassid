@@ -2,7 +2,12 @@
 
 module Decidim
   module Mpassid
-    VERSION = "0.31.0"
-    DECIDIM_VERSION = "~> 0.31.0"
+    def self.decidim_version
+      "~> 0.31.0"
+    end
+
+    def self.version
+      "0.31.0"
+    end
   end
 end

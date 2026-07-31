@@ -6,7 +6,7 @@ require "decidim/mpassid/version"
 
 Gem::Specification.new do |spec|
   spec.name = "decidim-mpassid"
-  spec.version = Decidim::Mpassid::VERSION
+  spec.version = Decidim::Mpassid.version
   spec.required_ruby_version = ">= 3.3"
   spec.authors = ["Antti Hukkanen"]
   spec.email = ["antti.hukkanen@mainiotech.fi"]
@@ -28,6 +28,6 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "decidim-core", Decidim::Mpassid::DECIDIM_VERSION
+  spec.add_dependency "decidim-core", Decidim::Mpassid.decidim_version
   spec.add_dependency "omniauth-mpassid", "~> 0.6.1"
 end

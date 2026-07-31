@@ -238,4 +238,20 @@ describe Decidim::Mpassid do
       end
     end
   end
+
+  describe ".configured?" do
+    it "returns true when the module is configured" do
+      # The test initializer should have called Decidim::Mpassid.configure
+      expect(Decidim::Mpassid.configured?).to be(true)
+    end
+  end
+
+  describe "omniauth provider registration" do
+    it "registers mpassid as a Decidim OmniAuth provider" do
+      provider = Decidim.config.omniauth_providers[:mpassid]
+      expect(provider).to be_present
+      expect(provider[:enabled]).to be(true)
+      expect(provider[:icon_path]).to eq("decidim/mpassid/mpassid_logo.svg")
+    end
+  end
 end

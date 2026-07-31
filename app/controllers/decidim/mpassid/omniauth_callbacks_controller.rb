@@ -243,7 +243,7 @@ module Decidim
       # revealed directly to the end user.
       def person_identifier_digest
         @person_identifier_digest ||= Digest::MD5.hexdigest(
-          "MPASSID:#{user_identifier}:#{Rails.application.secrets.secret_key_base}"
+          "MPASSID:#{user_identifier}:#{Rails.application.secret_key_base}"
         )
       end
 

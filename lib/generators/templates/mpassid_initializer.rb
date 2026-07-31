@@ -12,3 +12,15 @@ Decidim::Mpassid.configure do |config|
   config.certificate_file = "#{cert_path}/mpassid.crt"
   config.private_key_file = "#{cert_path}/mpassid.key"
 end
+
+# Register MPASSid as an OmniAuth provider in Decidim.
+# Starting from Decidim v0.31, OmniAuth providers are no longer configured
+# through config/secrets.yml. Instead, they must be registered directly in
+# Decidim's configuration using config.omniauth_providers.
+Decidim.configure do |config|
+  config.omniauth_providers[:mpassid] = {
+    enabled: Decidim::Env.new("OMNIAUTH_MPASSID_ENABLED", false),
+    mode: Decidim::Env.new("OMNIAUTH_MPASSID_MODE", nil),
+    icon_path: "decidim/mpassid/mpassid_logo.svg"
+  }
+end

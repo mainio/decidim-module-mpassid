@@ -15,13 +15,14 @@ DECIDIM_VERSION = Decidim::Mpassid::DECIDIM_VERSION
 gem "decidim", DECIDIM_VERSION
 gem "decidim-mpassid", path: "."
 
-gem "bootsnap", "~> 1.17"
+gem "bootsnap", "~> 1.4"
 
 gem "puma", ">= 6.4.2"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "decidim-dev", DECIDIM_VERSION
+  gem "decidim-initiatives", DECIDIM_VERSION
 
   # Fix issue with simplecov-cobertura
   # See: https://github.com/jessebs/simplecov-cobertura/pull/44

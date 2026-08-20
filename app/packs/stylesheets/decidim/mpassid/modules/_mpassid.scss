@@ -1,26 +1,26 @@
-.button--mpassid{
-  &.button--social--mini{
-    .button--social__icon{
-      padding: 0 .4rem;
+.button--mpassid {
+  &.button--social--mini {
+    .button--social__icon {
+      padding: 0 0.4rem;
     }
   }
 
-  .button--social__icon{
+  .button--social__icon {
     display: flex;
     align-items: center;
     justify-content: center;
     max-width: 3rem;
-    padding: 0 .3rem;
+    padding: 0 0.3rem;
 
     svg.mpass,
-    svg.mpassc{
+    svg.mpassc {
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    svg.mpass{
+    svg.mpass {
       fill: inherit;
     }
   }

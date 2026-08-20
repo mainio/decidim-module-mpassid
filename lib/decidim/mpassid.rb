@@ -14,60 +14,63 @@ require_relative "mpassid/metadata_template"
 
 module Decidim
   module Mpassid
-    include ActiveSupport::Configurable
-
     @configured = false
+
+    mattr_accessor :action_authorizer
 
     # :production - For MPASSid production environment
     # :test - For MPASSid test environment
-    config_accessor :mode, instance_reader: false
+    mattr_accessor :mode, instance_reader: false
 
     # Defines the auto email domain to generate verified email addresses upon
     # the user's registration automatically that have format similar to
     # "mpassid-identifier@auto-email-domain.fi".
     #
     # In case this is not defined, the default is the organization's domain.
-    config_accessor :auto_email_domain
+    mattr_accessor :auto_email_domain
 
-    config_accessor :sp_entity_id, instance_reader: false
+    mattr_accessor :sp_entity_id, instance_reader: false
 
     # The certificate string for the application
-    config_accessor :certificate, instance_reader: false
+    mattr_accessor :certificate, instance_reader: false
 
     # The private key string for the application
-    config_accessor :private_key, instance_reader: false
+    mattr_accessor :private_key, instance_reader: false
 
     # The certificate file for the application
-    config_accessor :certificate_file
+    mattr_accessor :certificate_file
 
     # The private key file for the application
-    config_accessor :private_key_file
+    mattr_accessor :private_key_file
 
     # Extra configuration for the omniauth strategy
-    config_accessor :extra do
-      {}
-    end
+    mattr_accessor :extra, default: {}
 
     # Allows customizing the authorization workflow e.g. for adding custom
     # workflow options or configuring an action authorizer for the
     # particular needs.
-    config_accessor :workflow_configurator do
-      lambda do |workflow|
-        # By default, expiration is set to 0 minutes which means it will
-        # never expire.
-        workflow.expires_in = 0.minutes
-      end
-    end
+    mattr_accessor :workflow_configurator, default: lambda { |workflow|
+      # By default, expiration is set to 0 minutes which means it will
+      # never expire.
+      workflow.expires_in = 0.minutes
+    }
 
     # Allows customizing how the authorization metadata gets collected from
     # the SAML attributes passed from the authorization endpoint.
-    config_accessor :metadata_collector_class do
-      Decidim::Mpassid::Verification::MetadataCollector
-    end
+    mattr_accessor :metadata_collector_class, default: Decidim::Mpassid::Verification::MetadataCollector
 
     # Class that includes all necessary information about schools in area.
-    config_accessor :school_metadata_klass do
-      Decidim::Mpassid::MetadataTemplate
+    mattr_accessor :school_metadata_klass, default: Decidim::Mpassid::MetadataTemplate
+
+    class << self
+      alias raw_mode mode
+      alias raw_sp_entity_id sp_entity_id
+      alias raw_certificate certificate
+      alias raw_private_key private_key
+    end
+
+    def self.config
+      self
     end
 
     def self.configured?
@@ -76,11 +79,11 @@ module Decidim
 
     def self.configure
       @configured = true
-      super
+      yield self
     end
 
     def self.mode
-      return config.mode if config.mode
+      return raw_mode if raw_mode
 
       # Read the mode from Decidim's omniauth provider configuration.
       # In Decidim v0.31+, provider settings are registered in
@@ -92,7 +95,7 @@ module Decidim
     end
 
     def self.sp_entity_id
-      return config.sp_entity_id if config.sp_entity_id
+      return raw_sp_entity_id if raw_sp_entity_id
 
       "#{application_host}/users/auth/mpassid/metadata"
     end
@@ -100,13 +103,13 @@ module Decidim
     def self.certificate
       return File.read(certificate_file) if certificate_file
 
-      config.certificate
+      raw_certificate
     end
 
     def self.private_key
       return File.read(private_key_file) if private_key_file
 
-      config.private_key
+      raw_private_key
     end
 
     def self.omniauth_settings
@@ -118,7 +121,7 @@ module Decidim
         settings[:certificate] = certificate
         settings[:private_key] = private_key
       end
-      settings.merge!(config.extra) if config.extra.is_a?(Hash)
+      settings.merge!(extra) if extra.is_a?(Hash)
       settings
     end
 

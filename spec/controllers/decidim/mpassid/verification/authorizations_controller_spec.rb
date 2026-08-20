@@ -22,7 +22,7 @@ module Decidim
             get :new
             expect(response).to render_template(:new)
             expect(response.body).to include("Redirection")
-            expect(response.body).to include(%(href="/users/auth/mpassid"))
+            expect(response.body).to include(%(href="/users/auth/mpassid?locale=en"))
           end
         end
       end

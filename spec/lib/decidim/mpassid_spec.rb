@@ -10,7 +10,8 @@ describe Decidim::Mpassid do
       mode: described_class.raw_mode,
       sp_entity_id: described_class.raw_sp_entity_id,
       certificate: described_class.raw_certificate,
-      private_key: described_class.raw_private_key
+      private_key: described_class.raw_private_key,
+      extra: described_class.extra
     }
 
     example.run
@@ -19,6 +20,7 @@ describe Decidim::Mpassid do
     described_class.sp_entity_id = original[:sp_entity_id]
     described_class.certificate = original[:certificate]
     described_class.private_key = original[:private_key]
+    described_class.extra = original[:extra]
   end
 
   describe ".mode" do

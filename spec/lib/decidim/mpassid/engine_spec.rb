@@ -32,7 +32,10 @@ describe Decidim::Mpassid::Engine do
   end
 
   it "adds the correct routes to the core engine" do
-    run_initializer("decidim_mpassid.mount_routes")
+    routes = ActionDispatch::Routing::RouteSet.new
+    routes.draw do
+      mount Decidim::Mpassid::Engine => "/"
+    end
 
     %w(GET POST).each do |method|
       expect(

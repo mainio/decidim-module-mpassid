@@ -10,6 +10,8 @@ module Decidim
       skip_before_action :verify_authenticity_token, only: [:mpassid, :failure]
       skip_after_action :verify_same_origin_request, only: [:mpassid, :failure]
 
+      # Disabling rubocop for authorization rule
+      # rubocop:disable Decidim/EnforcePermissionTo
       # This is called always after the user returns from the authentication
       # flow from the MPASSid identity provider.
       def mpassid
@@ -144,6 +146,7 @@ module Decidim
       def first_login_and_not_authorized?(_user)
         false
       end
+      # rubocop:enable Decidim/EnforcePermissionTo
 
       private
 
